@@ -23,7 +23,7 @@ import { headers } from "next/headers"
 import { detectLocaleFromPathname } from "@app/utilities/detectLocale"
 import { Prerenderer } from "@app/components/Prerenderer"
 import { AdminBar } from "@app/components/AdminBar"
-import { Plausible } from "@app/components/Plausible"
+
 // import { AppSidebar } from '@app/components/Sidebar'
 
 const inter = Inter({ subsets: ["latin"] })
@@ -52,8 +52,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        <Plausible disableAnalytics={settings.disableAnalytics} />
       </head>
 
       <body>

@@ -13,7 +13,7 @@ export const env = createEnv({
     PAYLOAD_PUBLIC_DRAFT_SECRET: z.string(),
     REVALIDATION_KEY: z.string(),
     // UPLOADTHING_TOKEN: z.string(),
-    // SENTRY_AUTH_TOKEN: z.string(),
+
     // SMTP_HOST: z.string(),
     // SMTP_USER: z.string(),
     // SMTP_PASS: z.string(),
@@ -31,7 +31,7 @@ export const env = createEnv({
     NEXT_PUBLIC_IS_LIVE: z.string().optional(),
     NEXT_PRIVATE_REVALIDATION_KEY: z.string(),
     NEXT_PRIVATE_DRAFT_SECRET: z.string(),
-    NEXT_PUBLIC_PLAUSIBLE_DOMAIN:z.string()
+
   }, 
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -49,9 +49,7 @@ export const env = createEnv({
     NEXT_PUBLIC_IS_LIVE: process.env.NEXT_PUBLIC_IS_LIVE,
     NEXT_PRIVATE_REVALIDATION_KEY: process.env.NEXT_PRIVATE_REVALIDATION_KEY,
     NEXT_PRIVATE_DRAFT_SECRET: process.env.NEXT_PRIVATE_DRAFT_SECRET,
-    NEXT_PUBLIC_PLAUSIBLE_DOMAIN:process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
     // UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
-    // SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
     // SMTP_HOST: process.env.SMTP_HOST,
     // SMTP_USER: process.env.SMTP_USER,
     // SMTP_PASS: process.env.SMTP_PASS,

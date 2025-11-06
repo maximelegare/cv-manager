@@ -16,7 +16,6 @@ import { draftMode, headers } from "next/headers"
 import { Page as PageType } from "@payload-types"
 import { Footer } from "@app/components/Footer"
 import { getMeUser } from "@app/utilities/getMeUser"
-// import { Plausible } from "@app/components/Plausible"
 
 export const dynamic = "force-dynamic"
 
@@ -109,18 +108,12 @@ export async function generateMetadata({
   }>
 }): Promise<Metadata> {
   const { slugs = ["home"], locale } = await params
-  const { slug, urlSlugs } = generatePageSlug(slugs)
-
-  // Gets either the first argument of the url (checks if it is a collection)
-  // Or uses Pages
-  // Meant to render
-  const collectionSlug = urlSlugs[0]
-  const collection = collectionSlug === "blogs" ? "blogs" : "pages"
+  const { slug } = generatePageSlug(slugs)
 
   const page = await queryPageBySlug({
-    collection,
+    collection: "pages",
     locale,
-    slug: collection === "blogs" && urlSlugs && urlSlugs[1] ? urlSlugs[1] : slug,
+    slug,
   })
   return generateMeta({ doc: page })
 }
@@ -151,7 +144,7 @@ const queryPageBySlug = async ({
 }: {
   slug: string
   locale: Locale
-  collection: "pages" | "blogs"
+  collection: "pages"
 }) => {
   const { isEnabled: draft } = await draftMode()
 

@@ -1,5 +1,3 @@
-import { conditionalRenderer } from "@app/payload/fields/conditionalBlockRenderer"
-import { optionsBar } from "@app/payload/fields/optionsBar"
 import switchField from "@app/payload/fields/switch/config"
 import { capitalize } from "@app/utilities/strings/catpitalize"
 import type { Block } from "payload"
@@ -19,7 +17,6 @@ const cardVariants: Array<CardVariant> = [
 export const ItemsListBlock: Block = {
   slug: "itemsList",
   fields: [
-    optionsBar(),
     {
       name: "blockTitle",
       label: "Title",
@@ -91,16 +88,16 @@ export const ItemsListBlock: Block = {
             },
           ],
         },
-        {
-          name: "categories",
-          type: "relationship",
-          admin: {
-            condition: (_, siblingData) => siblingData.relationTo === "categories",
-          },
-          hasMany: true,
-          label: "Categories to show",
-          relationTo: "categories",
-        },
+        // {
+        //   name: "categories",
+        //   type: "relationship",
+        //   admin: {
+        //     condition: (_, siblingData) => siblingData.relationTo === "categories",
+        //   },
+        //   hasMany: true,
+        //   label: "Categories to show",
+        //   relationTo: "categories",
+        // },
       ],
     },
     {
@@ -110,46 +107,46 @@ export const ItemsListBlock: Block = {
         condition: (_, siblingData) => siblingData.populateBy === "specificList",
       },
       fields: [
-        {
-          name: "relationTo",
-          type: "select",
-          defaultValue: "blogs",
-          label: "Collection to Show",
-          options: [
-            {
-              label: "Categories",
-              value: "categories",
-            },
-            {
-              label: "Blogs",
-              value: "blogs",
-            },
-            {
-              label: "Links",
-              value: "links",
-            },
-          ],
-        },
-        {
-          name: "categories",
-          type: "relationship",
-          admin: {
-            condition: (_, siblingData) => siblingData.relationTo === "categories",
-          },
-          hasMany: true,
-          label: "Categories to show",
-          relationTo: "categories",
-        },
-        {
-          name: "blogs",
-          type: "relationship",
-          admin: {
-            condition: (_, siblingData) => siblingData.relationTo === "blogs",
-          },
-          hasMany: true,
-          label: "blogs to show",
-          relationTo: "blogs",
-        },
+        // {
+        //   name: "relationTo",
+        //   type: "select",
+        //   defaultValue: "blogs",
+        //   label: "Collection to Show",
+        //   options: [
+        //     {
+        //       label: "Categories",
+        //       value: "categories",
+        //     },
+        //     {
+        //       label: "Blogs",
+        //       value: "blogs",
+        //     },
+        //     {
+        //       label: "Links",
+        //       value: "links",
+        //     },
+        //   ],
+        // },
+        // {
+        //   name: "categories",
+        //   type: "relationship",
+        //   admin: {
+        //     condition: (_, siblingData) => siblingData.relationTo === "categories",
+        //   },
+        //   hasMany: true,
+        //   label: "Categories to show",
+        //   relationTo: "categories",
+        // },
+        // {
+        //   name: "blogs",
+        //   type: "relationship",
+        //   admin: {
+        //     condition: (_, siblingData) => siblingData.relationTo === "blogs",
+        //   },
+        //   hasMany: true,
+        //   label: "blogs to show",
+        //   relationTo: "blogs",
+        // },
         {
           name: "links",
           type: "relationship",
@@ -214,7 +211,6 @@ export const ItemsListBlock: Block = {
       },
     }),
     gutterField(),
-    conditionalRenderer(),
   ],
   labels: {
     plural: "Items lists",

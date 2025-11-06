@@ -69,13 +69,9 @@ export interface Config {
   collections: {
     pages: Page;
     media: Media;
-    categories: Category;
     users: User;
-    blogs: Blog;
     links: Link;
-    'search-param-keys': SearchParamKey;
-    'search-param-values': SearchParamValue;
-    optionsBars: OptionsBar;
+    cv: Cv;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -87,13 +83,9 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    blogs: BlogsSelect<false> | BlogsSelect<true>;
     links: LinksSelect<false> | LinksSelect<true>;
-    'search-param-keys': SearchParamKeysSelect<false> | SearchParamKeysSelect<true>;
-    'search-param-values': SearchParamValuesSelect<false> | SearchParamValuesSelect<true>;
-    optionsBars: OptionsBarsSelect<false> | OptionsBarsSelect<true>;
+    cv: CvSelect<false> | CvSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -211,26 +203,6 @@ export interface Page {
              * Highlights the link based on the URL
              */
             isActive?: ('default' | 'exact' | 'never') | null;
-            searchParams?: {
-              toggleOnClick?: boolean | null;
-              params?:
-                | {
-                    key: string | SearchParamKey;
-                    value?: {
-                      valueType?: ('collection' | 'custom') | null;
-                      collectionData?: {
-                        type?: ('category' | 'blog') | null;
-                        category?: (string | null) | Category;
-                        blog?: (string | null) | Blog;
-                      };
-                      custom?: {
-                        value?: (string | null) | SearchParamValue;
-                      };
-                    };
-                    id?: string | null;
-                  }[]
-                | null;
-            };
             isSheet?: boolean | null;
           };
           id?: string | null;
@@ -279,26 +251,6 @@ export interface Page {
                      * Highlights the link based on the URL
                      */
                     isActive?: ('default' | 'exact' | 'never') | null;
-                    searchParams?: {
-                      toggleOnClick?: boolean | null;
-                      params?:
-                        | {
-                            key: string | SearchParamKey;
-                            value?: {
-                              valueType?: ('collection' | 'custom') | null;
-                              collectionData?: {
-                                type?: ('category' | 'blog') | null;
-                                category?: (string | null) | Category;
-                                blog?: (string | null) | Blog;
-                              };
-                              custom?: {
-                                value?: (string | null) | SearchParamValue;
-                              };
-                            };
-                            id?: string | null;
-                          }[]
-                        | null;
-                    };
                     isSheet?: boolean | null;
                   };
                   id?: string | null;
@@ -363,26 +315,6 @@ export interface Page {
                      * Highlights the link based on the URL
                      */
                     isActive?: ('default' | 'exact' | 'never') | null;
-                    searchParams?: {
-                      toggleOnClick?: boolean | null;
-                      params?:
-                        | {
-                            key: string | SearchParamKey;
-                            value?: {
-                              valueType?: ('collection' | 'custom') | null;
-                              collectionData?: {
-                                type?: ('category' | 'blog') | null;
-                                category?: (string | null) | Category;
-                                blog?: (string | null) | Blog;
-                              };
-                              custom?: {
-                                value?: (string | null) | SearchParamValue;
-                              };
-                            };
-                            id?: string | null;
-                          }[]
-                        | null;
-                    };
                     isSheet?: boolean | null;
                   };
                   id?: string | null;
@@ -438,35 +370,10 @@ export interface Page {
                  * Highlights the link based on the URL
                  */
                 isActive?: ('default' | 'exact' | 'never') | null;
-                searchParams?: {
-                  toggleOnClick?: boolean | null;
-                  params?:
-                    | {
-                        key: string | SearchParamKey;
-                        value?: {
-                          valueType?: ('collection' | 'custom') | null;
-                          collectionData?: {
-                            type?: ('category' | 'blog') | null;
-                            category?: (string | null) | Category;
-                            blog?: (string | null) | Blog;
-                          };
-                          custom?: {
-                            value?: (string | null) | SearchParamValue;
-                          };
-                        };
-                        id?: string | null;
-                      }[]
-                    | null;
-                };
                 isSheet?: boolean | null;
               };
             };
             gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-            conditionalRenderer?: {
-              show?: ('always' | 'conditionally') | null;
-              showParams?: (string | SearchParamValue)[] | null;
-              hideParams?: (string | SearchParamValue)[] | null;
-            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'content';
@@ -503,21 +410,13 @@ export interface Page {
             blockType: 'formBlock';
           }
         | {
-            optionsBar?: {
-              enable?: boolean | null;
-              data?: (string | null) | OptionsBar;
-            };
             blockTitle: string;
             populateBy: 'collection' | 'featured' | 'specificList';
             relationTo?: ('categories' | 'blogs') | null;
             featured?: {
               relationTo?: ('categories' | 'blogs') | null;
-              categories?: (string | Category)[] | null;
             };
             specificList?: {
-              relationTo?: ('categories' | 'blogs' | 'links') | null;
-              categories?: (string | Category)[] | null;
-              blogs?: (string | Blog)[] | null;
               links?: (string | Link)[] | null;
             };
             cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
@@ -527,11 +426,6 @@ export interface Page {
             limit?: number | null;
             hasPagination?: boolean | null;
             gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-            conditionalRenderer?: {
-              show?: ('always' | 'conditionally') | null;
-              showParams?: (string | SearchParamValue)[] | null;
-              hideParams?: (string | SearchParamValue)[] | null;
-            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'itemsList';
@@ -580,37 +474,6 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search-param-keys".
- */
-export interface SearchParamKey {
-  id: string;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  title?: string | null;
-  mainImage?: (string | null) | Media;
-  slug: string;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
@@ -643,243 +506,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blogs".
- */
-export interface Blog {
-  id: string;
-  publishedOn?: string | null;
-  title?: string | null;
-  subtitle?: string | null;
-  categories?: (string | Category)[] | null;
-  content: {
-    content: (
-      | {
-          hasMultipleColumns?: boolean | null;
-          columns?:
-            | {
-                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-                richText?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                enableLink?: boolean | null;
-                link?: {
-                  type?: ('reference' | 'custom' | 'current') | null;
-                  newTab?: boolean | null;
-                  reference?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  label: string;
-                  /**
-                   * Dictates how the link should be rendered.
-                   */
-                  appearance?:
-                    | (
-                        | 'default'
-                        | 'destructive'
-                        | 'ghost'
-                        | 'link'
-                        | 'outline'
-                        | 'text'
-                        | 'secondary'
-                        | 'underline'
-                        | 'iconOnly'
-                        | 'menu'
-                        | 'categoryLabel'
-                        | 'richtextLink'
-                        | 'sideDrawer'
-                      )
-                    | null;
-                  /**
-                   * Highlights the link based on the URL
-                   */
-                  isActive?: ('default' | 'exact' | 'never') | null;
-                  searchParams?: {
-                    toggleOnClick?: boolean | null;
-                    params?:
-                      | {
-                          key: string | SearchParamKey;
-                          value?: {
-                            valueType?: ('collection' | 'custom') | null;
-                            collectionData?: {
-                              type?: ('category' | 'blog') | null;
-                              category?: (string | null) | Category;
-                              blog?: (string | null) | Blog;
-                            };
-                            custom?: {
-                              value?: (string | null) | SearchParamValue;
-                            };
-                          };
-                          id?: string | null;
-                        }[]
-                      | null;
-                  };
-                  isSheet?: boolean | null;
-                };
-                id?: string | null;
-              }[]
-            | null;
-          column?: {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            enableLink?: boolean | null;
-            link?: {
-              type?: ('reference' | 'custom' | 'current') | null;
-              newTab?: boolean | null;
-              reference?: {
-                relationTo: 'pages';
-                value: string | Page;
-              } | null;
-              url?: string | null;
-              label: string;
-              /**
-               * Dictates how the link should be rendered.
-               */
-              appearance?:
-                | (
-                    | 'default'
-                    | 'destructive'
-                    | 'ghost'
-                    | 'link'
-                    | 'outline'
-                    | 'text'
-                    | 'secondary'
-                    | 'underline'
-                    | 'iconOnly'
-                    | 'menu'
-                    | 'categoryLabel'
-                    | 'richtextLink'
-                    | 'sideDrawer'
-                  )
-                | null;
-              /**
-               * Highlights the link based on the URL
-               */
-              isActive?: ('default' | 'exact' | 'never') | null;
-              searchParams?: {
-                toggleOnClick?: boolean | null;
-                params?:
-                  | {
-                      key: string | SearchParamKey;
-                      value?: {
-                        valueType?: ('collection' | 'custom') | null;
-                        collectionData?: {
-                          type?: ('category' | 'blog') | null;
-                          category?: (string | null) | Category;
-                          blog?: (string | null) | Blog;
-                        };
-                        custom?: {
-                          value?: (string | null) | SearchParamValue;
-                        };
-                      };
-                      id?: string | null;
-                    }[]
-                  | null;
-              };
-              isSheet?: boolean | null;
-            };
-          };
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          conditionalRenderer?: {
-            show?: ('always' | 'conditionally') | null;
-            showParams?: (string | SearchParamValue)[] | null;
-            hideParams?: (string | SearchParamValue)[] | null;
-          };
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          position?: ('default' | 'fullscreen') | null;
-          media: string | Media;
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'mediaBlock';
-        }
-      | {
-          type?: ('highImpact' | 'lowImpact' | 'mediumImpact') | null;
-          /**
-           * Only available for dynamic-content
-           */
-          useDocuementFields?: boolean | null;
-          title?: string | null;
-          subtitle?: string | null;
-          showImage?: boolean | null;
-          image?: (string | null) | Media;
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'titleSection';
-        }
-    )[];
-  };
-  medias?: {
-    mainImage?: (string | null) | Media;
-  };
-  isFeatured?: boolean | null;
-  isActive?: boolean | null;
-  slug: string;
-  skipSync?: boolean | null;
-  parent?: (string | null) | Blog;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Blog;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search-param-values".
- */
-export interface SearchParamValue {
-  id: string;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1057,49 +683,6 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "optionsBars".
- */
-export interface OptionsBar {
-  id: string;
-  links?:
-    | {
-        linkType?: ('link' | 'contextMenu') | null;
-        link?: (string | null) | Link;
-        triggerType?: ('link' | 'text') | null;
-        linkTrigger?: (string | null) | Link;
-        textTrigger?: string | null;
-        contextSections?:
-          | {
-              sectionType?: ('links' | 'socialMedia') | null;
-              sectionTitle: string;
-              text?: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              } | null;
-              sectionLinks?: (string | Link)[] | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "links".
  */
 export interface Link {
@@ -1138,26 +721,6 @@ export interface Link {
      * Highlights the link based on the URL
      */
     isActive?: ('default' | 'exact' | 'never') | null;
-    searchParams?: {
-      toggleOnClick?: boolean | null;
-      params?:
-        | {
-            key: string | SearchParamKey;
-            value?: {
-              valueType?: ('collection' | 'custom') | null;
-              collectionData?: {
-                type?: ('category' | 'blog') | null;
-                category?: (string | null) | Category;
-                blog?: (string | null) | Blog;
-              };
-              custom?: {
-                value?: (string | null) | SearchParamValue;
-              };
-            };
-            id?: string | null;
-          }[]
-        | null;
-    };
     isSheet?: boolean | null;
   };
   logo?: (string | null) | Media;
@@ -1182,6 +745,468 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cv".
+ */
+export interface Cv {
+  id: string;
+  publishedOn?: string | null;
+  slug: string;
+  infos?: {
+    name?: string | null;
+    jobTitle?: string | null;
+    contactInfos?:
+      | {
+          isLink?: boolean | null;
+          label?: string | null;
+          value?: string | null;
+          link?: {
+            type?: ('reference' | 'custom' | 'current') | null;
+            newTab?: boolean | null;
+            reference?: {
+              relationTo: 'pages';
+              value: string | Page;
+            } | null;
+            url?: string | null;
+            label: string;
+            /**
+             * Dictates how the link should be rendered.
+             */
+            appearance?:
+              | (
+                  | 'default'
+                  | 'destructive'
+                  | 'ghost'
+                  | 'link'
+                  | 'outline'
+                  | 'text'
+                  | 'secondary'
+                  | 'underline'
+                  | 'iconOnly'
+                  | 'menu'
+                  | 'categoryLabel'
+                  | 'richtextLink'
+                  | 'sideDrawer'
+                )
+              | null;
+            /**
+             * Highlights the link based on the URL
+             */
+            isActive?: ('default' | 'exact' | 'never') | null;
+            isSheet?: boolean | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Introduction: {
+    content: (
+      | {
+          hasMultipleColumns?: boolean | null;
+          columns?:
+            | {
+                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                richText?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                enableLink?: boolean | null;
+                link?: {
+                  type?: ('reference' | 'custom' | 'current') | null;
+                  newTab?: boolean | null;
+                  reference?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  label: string;
+                  /**
+                   * Dictates how the link should be rendered.
+                   */
+                  appearance?:
+                    | (
+                        | 'default'
+                        | 'destructive'
+                        | 'ghost'
+                        | 'link'
+                        | 'outline'
+                        | 'text'
+                        | 'secondary'
+                        | 'underline'
+                        | 'iconOnly'
+                        | 'menu'
+                        | 'categoryLabel'
+                        | 'richtextLink'
+                        | 'sideDrawer'
+                      )
+                    | null;
+                  /**
+                   * Highlights the link based on the URL
+                   */
+                  isActive?: ('default' | 'exact' | 'never') | null;
+                  isSheet?: boolean | null;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          column?: {
+            richText?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            enableLink?: boolean | null;
+            link?: {
+              type?: ('reference' | 'custom' | 'current') | null;
+              newTab?: boolean | null;
+              reference?: {
+                relationTo: 'pages';
+                value: string | Page;
+              } | null;
+              url?: string | null;
+              label: string;
+              /**
+               * Dictates how the link should be rendered.
+               */
+              appearance?:
+                | (
+                    | 'default'
+                    | 'destructive'
+                    | 'ghost'
+                    | 'link'
+                    | 'outline'
+                    | 'text'
+                    | 'secondary'
+                    | 'underline'
+                    | 'iconOnly'
+                    | 'menu'
+                    | 'categoryLabel'
+                    | 'richtextLink'
+                    | 'sideDrawer'
+                  )
+                | null;
+              /**
+               * Highlights the link based on the URL
+               */
+              isActive?: ('default' | 'exact' | 'never') | null;
+              isSheet?: boolean | null;
+            };
+          };
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'content';
+        }
+      | {
+          type?: ('highImpact' | 'lowImpact' | 'mediumImpact') | null;
+          /**
+           * Only available for dynamic-content
+           */
+          useDocuementFields?: boolean | null;
+          title?: string | null;
+          subtitle?: string | null;
+          showImage?: boolean | null;
+          image?: (string | null) | Media;
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'titleSection';
+        }
+    )[];
+  };
+  Competences?: {
+    hardSkills?:
+      | {
+          title?: string | null;
+          softSkills?:
+            | {
+                title?: string | null;
+                level?: ('beginner' | 'intermediate' | 'advanced') | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  Experiences?: {
+    role?: string | null;
+    company?: string | null;
+    description?: string | null;
+    startDate?: string | null;
+    toPresent?: boolean | null;
+    endDate?: string | null;
+    content?:
+      | {
+          hasMultipleColumns?: boolean | null;
+          columns?:
+            | {
+                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                richText?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                enableLink?: boolean | null;
+                link?: {
+                  type?: ('reference' | 'custom' | 'current') | null;
+                  newTab?: boolean | null;
+                  reference?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  label: string;
+                  /**
+                   * Dictates how the link should be rendered.
+                   */
+                  appearance?:
+                    | (
+                        | 'default'
+                        | 'destructive'
+                        | 'ghost'
+                        | 'link'
+                        | 'outline'
+                        | 'text'
+                        | 'secondary'
+                        | 'underline'
+                        | 'iconOnly'
+                        | 'menu'
+                        | 'categoryLabel'
+                        | 'richtextLink'
+                        | 'sideDrawer'
+                      )
+                    | null;
+                  /**
+                   * Highlights the link based on the URL
+                   */
+                  isActive?: ('default' | 'exact' | 'never') | null;
+                  isSheet?: boolean | null;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          column?: {
+            richText?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            enableLink?: boolean | null;
+            link?: {
+              type?: ('reference' | 'custom' | 'current') | null;
+              newTab?: boolean | null;
+              reference?: {
+                relationTo: 'pages';
+                value: string | Page;
+              } | null;
+              url?: string | null;
+              label: string;
+              /**
+               * Dictates how the link should be rendered.
+               */
+              appearance?:
+                | (
+                    | 'default'
+                    | 'destructive'
+                    | 'ghost'
+                    | 'link'
+                    | 'outline'
+                    | 'text'
+                    | 'secondary'
+                    | 'underline'
+                    | 'iconOnly'
+                    | 'menu'
+                    | 'categoryLabel'
+                    | 'richtextLink'
+                    | 'sideDrawer'
+                  )
+                | null;
+              /**
+               * Highlights the link based on the URL
+               */
+              isActive?: ('default' | 'exact' | 'never') | null;
+              isSheet?: boolean | null;
+            };
+          };
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'content';
+        }[]
+      | null;
+  };
+  Education?: {
+    program?: string | null;
+    school?: string | null;
+    startDate?: string | null;
+    endDate?: string | null;
+    content?:
+      | {
+          hasMultipleColumns?: boolean | null;
+          columns?:
+            | {
+                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                richText?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                enableLink?: boolean | null;
+                link?: {
+                  type?: ('reference' | 'custom' | 'current') | null;
+                  newTab?: boolean | null;
+                  reference?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  label: string;
+                  /**
+                   * Dictates how the link should be rendered.
+                   */
+                  appearance?:
+                    | (
+                        | 'default'
+                        | 'destructive'
+                        | 'ghost'
+                        | 'link'
+                        | 'outline'
+                        | 'text'
+                        | 'secondary'
+                        | 'underline'
+                        | 'iconOnly'
+                        | 'menu'
+                        | 'categoryLabel'
+                        | 'richtextLink'
+                        | 'sideDrawer'
+                      )
+                    | null;
+                  /**
+                   * Highlights the link based on the URL
+                   */
+                  isActive?: ('default' | 'exact' | 'never') | null;
+                  isSheet?: boolean | null;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          column?: {
+            richText?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            enableLink?: boolean | null;
+            link?: {
+              type?: ('reference' | 'custom' | 'current') | null;
+              newTab?: boolean | null;
+              reference?: {
+                relationTo: 'pages';
+                value: string | Page;
+              } | null;
+              url?: string | null;
+              label: string;
+              /**
+               * Dictates how the link should be rendered.
+               */
+              appearance?:
+                | (
+                    | 'default'
+                    | 'destructive'
+                    | 'ghost'
+                    | 'link'
+                    | 'outline'
+                    | 'text'
+                    | 'secondary'
+                    | 'underline'
+                    | 'iconOnly'
+                    | 'menu'
+                    | 'categoryLabel'
+                    | 'richtextLink'
+                    | 'sideDrawer'
+                  )
+                | null;
+              /**
+               * Highlights the link based on the URL
+               */
+              isActive?: ('default' | 'exact' | 'never') | null;
+              isSheet?: boolean | null;
+            };
+          };
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'content';
+        }[]
+      | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1237,32 +1262,16 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'categories';
-        value: string | Category;
-      } | null)
-    | ({
         relationTo: 'users';
         value: string | User;
-      } | null)
-    | ({
-        relationTo: 'blogs';
-        value: string | Blog;
       } | null)
     | ({
         relationTo: 'links';
         value: string | Link;
       } | null)
     | ({
-        relationTo: 'search-param-keys';
-        value: string | SearchParamKey;
-      } | null)
-    | ({
-        relationTo: 'search-param-values';
-        value: string | SearchParamValue;
-      } | null)
-    | ({
-        relationTo: 'optionsBars';
-        value: string | OptionsBar;
+        relationTo: 'cv';
+        value: string | Cv;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1349,34 +1358,6 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     appearance?: T;
                     isActive?: T;
-                    searchParams?:
-                      | T
-                      | {
-                          toggleOnClick?: T;
-                          params?:
-                            | T
-                            | {
-                                key?: T;
-                                value?:
-                                  | T
-                                  | {
-                                      valueType?: T;
-                                      collectionData?:
-                                        | T
-                                        | {
-                                            type?: T;
-                                            category?: T;
-                                            blog?: T;
-                                          };
-                                      custom?:
-                                        | T
-                                        | {
-                                            value?: T;
-                                          };
-                                    };
-                                id?: T;
-                              };
-                        };
                     isSheet?: T;
                   };
               id?: T;
@@ -1407,34 +1388,6 @@ export interface PagesSelect<T extends boolean = true> {
                           label?: T;
                           appearance?: T;
                           isActive?: T;
-                          searchParams?:
-                            | T
-                            | {
-                                toggleOnClick?: T;
-                                params?:
-                                  | T
-                                  | {
-                                      key?: T;
-                                      value?:
-                                        | T
-                                        | {
-                                            valueType?: T;
-                                            collectionData?:
-                                              | T
-                                              | {
-                                                  type?: T;
-                                                  category?: T;
-                                                  blog?: T;
-                                                };
-                                            custom?:
-                                              | T
-                                              | {
-                                                  value?: T;
-                                                };
-                                          };
-                                      id?: T;
-                                    };
-                              };
                           isSheet?: T;
                         };
                     id?: T;
@@ -1463,34 +1416,6 @@ export interface PagesSelect<T extends boolean = true> {
                           label?: T;
                           appearance?: T;
                           isActive?: T;
-                          searchParams?:
-                            | T
-                            | {
-                                toggleOnClick?: T;
-                                params?:
-                                  | T
-                                  | {
-                                      key?: T;
-                                      value?:
-                                        | T
-                                        | {
-                                            valueType?: T;
-                                            collectionData?:
-                                              | T
-                                              | {
-                                                  type?: T;
-                                                  category?: T;
-                                                  blog?: T;
-                                                };
-                                            custom?:
-                                              | T
-                                              | {
-                                                  value?: T;
-                                                };
-                                          };
-                                      id?: T;
-                                    };
-                              };
                           isSheet?: T;
                         };
                     id?: T;
@@ -1510,45 +1435,10 @@ export interface PagesSelect<T extends boolean = true> {
                           label?: T;
                           appearance?: T;
                           isActive?: T;
-                          searchParams?:
-                            | T
-                            | {
-                                toggleOnClick?: T;
-                                params?:
-                                  | T
-                                  | {
-                                      key?: T;
-                                      value?:
-                                        | T
-                                        | {
-                                            valueType?: T;
-                                            collectionData?:
-                                              | T
-                                              | {
-                                                  type?: T;
-                                                  category?: T;
-                                                  blog?: T;
-                                                };
-                                            custom?:
-                                              | T
-                                              | {
-                                                  value?: T;
-                                                };
-                                          };
-                                      id?: T;
-                                    };
-                              };
                           isSheet?: T;
                         };
                   };
               gutter?: T;
-              conditionalRenderer?:
-                | T
-                | {
-                    show?: T;
-                    showParams?: T;
-                    hideParams?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -1574,12 +1464,6 @@ export interface PagesSelect<T extends boolean = true> {
         itemsList?:
           | T
           | {
-              optionsBar?:
-                | T
-                | {
-                    enable?: T;
-                    data?: T;
-                  };
               blockTitle?: T;
               populateBy?: T;
               relationTo?: T;
@@ -1587,14 +1471,10 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     relationTo?: T;
-                    categories?: T;
                   };
               specificList?:
                 | T
                 | {
-                    relationTo?: T;
-                    categories?: T;
-                    blogs?: T;
                     links?: T;
                   };
               cardVariant?: T;
@@ -1604,13 +1484,6 @@ export interface PagesSelect<T extends boolean = true> {
               limit?: T;
               hasPagination?: T;
               gutter?: T;
-              conditionalRenderer?:
-                | T
-                | {
-                    show?: T;
-                    showParams?: T;
-                    hideParams?: T;
-                  };
               id?: T;
               blockName?: T;
             };
@@ -1675,26 +1548,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  title?: T;
-  mainImage?: T;
-  slug?: T;
-  parent?: T;
-  breadcrumbs?:
-    | T
-    | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -1712,14 +1565,60 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blogs_select".
+ * via the `definition` "links_select".
  */
-export interface BlogsSelect<T extends boolean = true> {
-  publishedOn?: T;
+export interface LinksSelect<T extends boolean = true> {
   title?: T;
-  subtitle?: T;
-  categories?: T;
-  content?:
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+        isActive?: T;
+        isSheet?: T;
+      };
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cv_select".
+ */
+export interface CvSelect<T extends boolean = true> {
+  publishedOn?: T;
+  slug?: T;
+  infos?:
+    | T
+    | {
+        name?: T;
+        jobTitle?: T;
+        contactInfos?:
+          | T
+          | {
+              isLink?: T;
+              label?: T;
+              value?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                    appearance?: T;
+                    isActive?: T;
+                    isSheet?: T;
+                  };
+              id?: T;
+            };
+      };
+  Introduction?:
     | T
     | {
         content?:
@@ -1745,34 +1644,6 @@ export interface BlogsSelect<T extends boolean = true> {
                                 label?: T;
                                 appearance?: T;
                                 isActive?: T;
-                                searchParams?:
-                                  | T
-                                  | {
-                                      toggleOnClick?: T;
-                                      params?:
-                                        | T
-                                        | {
-                                            key?: T;
-                                            value?:
-                                              | T
-                                              | {
-                                                  valueType?: T;
-                                                  collectionData?:
-                                                    | T
-                                                    | {
-                                                        type?: T;
-                                                        category?: T;
-                                                        blog?: T;
-                                                      };
-                                                  custom?:
-                                                    | T
-                                                    | {
-                                                        value?: T;
-                                                      };
-                                                };
-                                            id?: T;
-                                          };
-                                    };
                                 isSheet?: T;
                               };
                           id?: T;
@@ -1792,53 +1663,9 @@ export interface BlogsSelect<T extends boolean = true> {
                                 label?: T;
                                 appearance?: T;
                                 isActive?: T;
-                                searchParams?:
-                                  | T
-                                  | {
-                                      toggleOnClick?: T;
-                                      params?:
-                                        | T
-                                        | {
-                                            key?: T;
-                                            value?:
-                                              | T
-                                              | {
-                                                  valueType?: T;
-                                                  collectionData?:
-                                                    | T
-                                                    | {
-                                                        type?: T;
-                                                        category?: T;
-                                                        blog?: T;
-                                                      };
-                                                  custom?:
-                                                    | T
-                                                    | {
-                                                        value?: T;
-                                                      };
-                                                };
-                                            id?: T;
-                                          };
-                                    };
                                 isSheet?: T;
                               };
                         };
-                    gutter?: T;
-                    conditionalRenderer?:
-                      | T
-                      | {
-                          show?: T;
-                          showParams?: T;
-                          hideParams?: T;
-                        };
-                    id?: T;
-                    blockName?: T;
-                  };
-              mediaBlock?:
-                | T
-                | {
-                    position?: T;
-                    media?: T;
                     gutter?: T;
                     id?: T;
                     blockName?: T;
@@ -1858,130 +1685,144 @@ export interface BlogsSelect<T extends boolean = true> {
                   };
             };
       };
-  medias?:
+  Competences?:
     | T
     | {
-        mainImage?: T;
+        hardSkills?:
+          | T
+          | {
+              title?: T;
+              softSkills?:
+                | T
+                | {
+                    title?: T;
+                    level?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
       };
-  isFeatured?: T;
-  isActive?: T;
-  slug?: T;
-  skipSync?: T;
-  parent?: T;
-  breadcrumbs?:
+  Experiences?:
     | T
     | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
+        role?: T;
+        company?: T;
         description?: T;
-        image?: T;
+        startDate?: T;
+        toPresent?: T;
+        endDate?: T;
+        content?:
+          | T
+          | {
+              content?:
+                | T
+                | {
+                    hasMultipleColumns?: T;
+                    columns?:
+                      | T
+                      | {
+                          size?: T;
+                          richText?: T;
+                          enableLink?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                                isActive?: T;
+                                isSheet?: T;
+                              };
+                          id?: T;
+                        };
+                    column?:
+                      | T
+                      | {
+                          richText?: T;
+                          enableLink?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                                isActive?: T;
+                                isSheet?: T;
+                              };
+                        };
+                    gutter?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
+      };
+  Education?:
+    | T
+    | {
+        program?: T;
+        school?: T;
+        startDate?: T;
+        endDate?: T;
+        content?:
+          | T
+          | {
+              content?:
+                | T
+                | {
+                    hasMultipleColumns?: T;
+                    columns?:
+                      | T
+                      | {
+                          size?: T;
+                          richText?: T;
+                          enableLink?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                                isActive?: T;
+                                isSheet?: T;
+                              };
+                          id?: T;
+                        };
+                    column?:
+                      | T
+                      | {
+                          richText?: T;
+                          enableLink?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                                isActive?: T;
+                                isSheet?: T;
+                              };
+                        };
+                    gutter?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
       };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "links_select".
- */
-export interface LinksSelect<T extends boolean = true> {
-  title?: T;
-  link?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
-        isActive?: T;
-        searchParams?:
-          | T
-          | {
-              toggleOnClick?: T;
-              params?:
-                | T
-                | {
-                    key?: T;
-                    value?:
-                      | T
-                      | {
-                          valueType?: T;
-                          collectionData?:
-                            | T
-                            | {
-                                type?: T;
-                                category?: T;
-                                blog?: T;
-                              };
-                          custom?:
-                            | T
-                            | {
-                                value?: T;
-                              };
-                        };
-                    id?: T;
-                  };
-            };
-        isSheet?: T;
-      };
-  logo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search-param-keys_select".
- */
-export interface SearchParamKeysSelect<T extends boolean = true> {
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search-param-values_select".
- */
-export interface SearchParamValuesSelect<T extends boolean = true> {
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "optionsBars_select".
- */
-export interface OptionsBarsSelect<T extends boolean = true> {
-  links?:
-    | T
-    | {
-        linkType?: T;
-        link?: T;
-        triggerType?: T;
-        linkTrigger?: T;
-        textTrigger?: T;
-        contextSections?:
-          | T
-          | {
-              sectionType?: T;
-              sectionTitle?: T;
-              text?: T;
-              sectionLinks?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2297,26 +2138,6 @@ export interface SideDrawer {
                          * Highlights the link based on the URL
                          */
                         isActive?: ('default' | 'exact' | 'never') | null;
-                        searchParams?: {
-                          toggleOnClick?: boolean | null;
-                          params?:
-                            | {
-                                key: string | SearchParamKey;
-                                value?: {
-                                  valueType?: ('collection' | 'custom') | null;
-                                  collectionData?: {
-                                    type?: ('category' | 'blog') | null;
-                                    category?: (string | null) | Category;
-                                    blog?: (string | null) | Blog;
-                                  };
-                                  custom?: {
-                                    value?: (string | null) | SearchParamValue;
-                                  };
-                                };
-                                id?: string | null;
-                              }[]
-                            | null;
-                        };
                         isSheet?: boolean | null;
                       };
                       id?: string | null;
@@ -2372,35 +2193,10 @@ export interface SideDrawer {
                      * Highlights the link based on the URL
                      */
                     isActive?: ('default' | 'exact' | 'never') | null;
-                    searchParams?: {
-                      toggleOnClick?: boolean | null;
-                      params?:
-                        | {
-                            key: string | SearchParamKey;
-                            value?: {
-                              valueType?: ('collection' | 'custom') | null;
-                              collectionData?: {
-                                type?: ('category' | 'blog') | null;
-                                category?: (string | null) | Category;
-                                blog?: (string | null) | Blog;
-                              };
-                              custom?: {
-                                value?: (string | null) | SearchParamValue;
-                              };
-                            };
-                            id?: string | null;
-                          }[]
-                        | null;
-                    };
                     isSheet?: boolean | null;
                   };
                 };
                 gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-                conditionalRenderer?: {
-                  show?: ('always' | 'conditionally') | null;
-                  showParams?: (string | SearchParamValue)[] | null;
-                  hideParams?: (string | SearchParamValue)[] | null;
-                };
                 id?: string | null;
                 blockName?: string | null;
                 blockType: 'content';
@@ -2429,21 +2225,13 @@ export interface SideDrawer {
                 blockType: 'formBlock';
               }
             | {
-                optionsBar?: {
-                  enable?: boolean | null;
-                  data?: (string | null) | OptionsBar;
-                };
                 blockTitle: string;
                 populateBy: 'collection' | 'featured' | 'specificList';
                 relationTo?: ('categories' | 'blogs') | null;
                 featured?: {
                   relationTo?: ('categories' | 'blogs') | null;
-                  categories?: (string | Category)[] | null;
                 };
                 specificList?: {
-                  relationTo?: ('categories' | 'blogs' | 'links') | null;
-                  categories?: (string | Category)[] | null;
-                  blogs?: (string | Blog)[] | null;
                   links?: (string | Link)[] | null;
                 };
                 cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
@@ -2453,11 +2241,6 @@ export interface SideDrawer {
                 limit?: number | null;
                 hasPagination?: boolean | null;
                 gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-                conditionalRenderer?: {
-                  show?: ('always' | 'conditionally') | null;
-                  showParams?: (string | SearchParamValue)[] | null;
-                  hideParams?: (string | SearchParamValue)[] | null;
-                };
                 id?: string | null;
                 blockName?: string | null;
                 blockType: 'itemsList';
@@ -2525,21 +2308,13 @@ export interface Sidebars {
     sections?:
       | (
           | {
-              optionsBar?: {
-                enable?: boolean | null;
-                data?: (string | null) | OptionsBar;
-              };
               blockTitle: string;
               populateBy: 'collection' | 'featured' | 'specificList';
               relationTo?: ('categories' | 'blogs') | null;
               featured?: {
                 relationTo?: ('categories' | 'blogs') | null;
-                categories?: (string | Category)[] | null;
               };
               specificList?: {
-                relationTo?: ('categories' | 'blogs' | 'links') | null;
-                categories?: (string | Category)[] | null;
-                blogs?: (string | Blog)[] | null;
                 links?: (string | Link)[] | null;
               };
               cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
@@ -2549,11 +2324,6 @@ export interface Sidebars {
               limit?: number | null;
               hasPagination?: boolean | null;
               gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-              conditionalRenderer?: {
-                show?: ('always' | 'conditionally') | null;
-                showParams?: (string | SearchParamValue)[] | null;
-                hideParams?: (string | SearchParamValue)[] | null;
-              };
               id?: string | null;
               blockName?: string | null;
               blockType: 'itemsList';
@@ -2652,34 +2422,6 @@ export interface SideDrawerSelect<T extends boolean = true> {
                                       label?: T;
                                       appearance?: T;
                                       isActive?: T;
-                                      searchParams?:
-                                        | T
-                                        | {
-                                            toggleOnClick?: T;
-                                            params?:
-                                              | T
-                                              | {
-                                                  key?: T;
-                                                  value?:
-                                                    | T
-                                                    | {
-                                                        valueType?: T;
-                                                        collectionData?:
-                                                          | T
-                                                          | {
-                                                              type?: T;
-                                                              category?: T;
-                                                              blog?: T;
-                                                            };
-                                                        custom?:
-                                                          | T
-                                                          | {
-                                                              value?: T;
-                                                            };
-                                                      };
-                                                  id?: T;
-                                                };
-                                          };
                                       isSheet?: T;
                                     };
                                 id?: T;
@@ -2699,45 +2441,10 @@ export interface SideDrawerSelect<T extends boolean = true> {
                                       label?: T;
                                       appearance?: T;
                                       isActive?: T;
-                                      searchParams?:
-                                        | T
-                                        | {
-                                            toggleOnClick?: T;
-                                            params?:
-                                              | T
-                                              | {
-                                                  key?: T;
-                                                  value?:
-                                                    | T
-                                                    | {
-                                                        valueType?: T;
-                                                        collectionData?:
-                                                          | T
-                                                          | {
-                                                              type?: T;
-                                                              category?: T;
-                                                              blog?: T;
-                                                            };
-                                                        custom?:
-                                                          | T
-                                                          | {
-                                                              value?: T;
-                                                            };
-                                                      };
-                                                  id?: T;
-                                                };
-                                          };
                                       isSheet?: T;
                                     };
                               };
                           gutter?: T;
-                          conditionalRenderer?:
-                            | T
-                            | {
-                                show?: T;
-                                showParams?: T;
-                                hideParams?: T;
-                              };
                           id?: T;
                           blockName?: T;
                         };
@@ -2754,12 +2461,6 @@ export interface SideDrawerSelect<T extends boolean = true> {
                     itemsList?:
                       | T
                       | {
-                          optionsBar?:
-                            | T
-                            | {
-                                enable?: T;
-                                data?: T;
-                              };
                           blockTitle?: T;
                           populateBy?: T;
                           relationTo?: T;
@@ -2767,14 +2468,10 @@ export interface SideDrawerSelect<T extends boolean = true> {
                             | T
                             | {
                                 relationTo?: T;
-                                categories?: T;
                               };
                           specificList?:
                             | T
                             | {
-                                relationTo?: T;
-                                categories?: T;
-                                blogs?: T;
                                 links?: T;
                               };
                           cardVariant?: T;
@@ -2784,13 +2481,6 @@ export interface SideDrawerSelect<T extends boolean = true> {
                           limit?: T;
                           hasPagination?: T;
                           gutter?: T;
-                          conditionalRenderer?:
-                            | T
-                            | {
-                                show?: T;
-                                showParams?: T;
-                                hideParams?: T;
-                              };
                           id?: T;
                           blockName?: T;
                         };
@@ -2859,12 +2549,6 @@ export interface SidebarsSelect<T extends boolean = true> {
               itemsList?:
                 | T
                 | {
-                    optionsBar?:
-                      | T
-                      | {
-                          enable?: T;
-                          data?: T;
-                        };
                     blockTitle?: T;
                     populateBy?: T;
                     relationTo?: T;
@@ -2872,14 +2556,10 @@ export interface SidebarsSelect<T extends boolean = true> {
                       | T
                       | {
                           relationTo?: T;
-                          categories?: T;
                         };
                     specificList?:
                       | T
                       | {
-                          relationTo?: T;
-                          categories?: T;
-                          blogs?: T;
                           links?: T;
                         };
                     cardVariant?: T;
@@ -2889,13 +2569,6 @@ export interface SidebarsSelect<T extends boolean = true> {
                     limit?: T;
                     hasPagination?: T;
                     gutter?: T;
-                    conditionalRenderer?:
-                      | T
-                      | {
-                          show?: T;
-                          showParams?: T;
-                          hideParams?: T;
-                        };
                     id?: T;
                     blockName?: T;
                   };

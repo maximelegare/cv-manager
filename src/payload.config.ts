@@ -3,7 +3,6 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb"
 
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
 import { formBuilderPlugin } from "@payloadcms/plugin-form-builder"
-import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs"
 import { redirectsPlugin } from "@payloadcms/plugin-redirects"
 import { seoPlugin } from "@payloadcms/plugin-seo"
 import { uploadthingStorage } from "@payloadcms/storage-uploadthing"
@@ -22,7 +21,6 @@ import path from "path"
 import { buildConfig } from "payload"
 import { fileURLToPath } from "url"
 
-import { Categories } from "./app/payload/collections/Categories"
 import { Media } from "./app/payload/collections/Media"
 import { Pages } from "./app/payload/collections/Pages"
 import { Users } from "./app/payload/collections/Users"
@@ -39,11 +37,9 @@ import { FontColorFeature } from "@app/payload/lexical/features/fontColorFeature
 import { GetInTouch } from "@app/payload/globals/GetInTouch"
 import { revalidateGlobalsHandler } from "@app/endpoints/revalidate"
 import { Links } from "@app/payload/collections/Links"
-import { SearchParamValues } from "@app/payload/collections/SearchParams/values"
-import { SearchParamKeys } from "@app/payload/collections/SearchParams/keys"
-import { OptionsBars } from "@app/payload/collections/OptionsBars"
-import { Blogs } from "@app/payload/collections/blogs"
 import { Sidebars } from "@app/payload/globals/Sidebars/config"
+import { CV } from "@app/payload/collections/cvs"
+
 // import { EmbedFeature } from '@payload/lexical/features/embedFeature/feature.server'
 // import { FontColorFeature } from '@payload/lexical/features/fontColorFeature/feature.server'
 
@@ -128,17 +124,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI || "",
   }),
 
-  collections: [
-    Pages,
-    Media,
-    Categories,
-    Users,
-    Blogs,
-    Links,
-    SearchParamKeys,
-    SearchParamValues,
-    OptionsBars,
-  ],
+  collections: [Pages, Media, Users, Links, CV],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   endpoints: [
@@ -181,18 +167,8 @@ export default buildConfig({
         },
       },
     }),
-    nestedDocsPlugin({
-      collections: ["categories"],
-      generateLabel: (_, doc) => doc.title as string,
-      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
-    }),
-    nestedDocsPlugin({
-      collections: ["blogs"],
-      generateLabel: (_, doc) => doc.title as string,
-      generateURL: (docs) => docs.reduce((url, doc) => `/blogs/${doc.slug}`, ""),
-    }),
     seoPlugin({
-      collections: ["pages", "blogs"],
+      collections: ["pages"],
       generateTitle,
       tabbedUI: true,
       uploadsCollection: "media",

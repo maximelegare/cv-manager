@@ -56,7 +56,6 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
-    "@sentry/nextjs": "^8.47.0",
     "@smakss/react-scroll-direction": "^4.2.0",
     "@swc/core": "^1.7.0-nightly-20240714.1",
     "@t3-oss/env-nextjs": "^0.10.1",

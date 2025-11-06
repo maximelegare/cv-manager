@@ -2,7 +2,7 @@ import type { Field } from "payload"
 
 import deepMerge from "@app/utilities/deepMerge"
 import { buttonVariant } from "@app/components/ui/button"
-import { searchParams } from "./searchParams"
+// import { searchParams } from "./searchParams"
 import switchField from "./switch/config"
 
 export type LinkAppearances = keyof typeof buttonVariant
@@ -154,7 +154,7 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
           { value: "never", label: "Never" },
         ],
       },
-      searchParams(),
+      // searchParams(),
       switchField({
         label: "isSheet",
         name: "isSheet",
