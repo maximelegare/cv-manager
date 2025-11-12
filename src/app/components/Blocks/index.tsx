@@ -19,7 +19,13 @@ export const Blocks: React.FC<{
     slugs?: string[]
   }
 }> = (props) => {
-  const { blocks, containerClassName, limit, offset = 0, urlSearchParams } = props
+  const {
+    blocks,
+    containerClassName,
+    limit,
+    offset = 0,
+    // urlSearchParams
+  } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -30,31 +36,31 @@ export const Blocks: React.FC<{
           if (limit && index >= limit + offset) return null
           if (index < offset) return null
 
-          const showUrlParam = urlSearchParams?.show
+          // const showUrlParam = urlSearchParams?.show
           const { blockType } = block
 
           /*
             Hides the block based on the conditional searchParams renderer 
           */
 
-          if (block?.conditionalRenderer?.show === "conditionally") {
-            const showParams = block?.conditionalRenderer?.showParams || []
-            const hideParams = block?.conditionalRenderer?.hideParams || []
+          // if (block?.conditionalRenderer?.show === "conditionally") {
+          //   const showParams = block?.conditionalRenderer?.showParams || []
+          //   const hideParams = block?.conditionalRenderer?.hideParams || []
 
-            // Check if "none" is included in showParam
-            const hasNone = showParams.some((el) => el.slug === "none")
+          //   // Check if "none" is included in showParam
+          //   const hasNone = showParams.some((el) => el.slug === "none")
 
-            // If "none" is NOT included, check if showUrlParam is in showParams
-            const shouldShow = hasNone || showParams.some((el) => el.slug === showUrlParam)
+          //   // If "none" is NOT included, check if showUrlParam is in showParams
+          //   const shouldShow = hasNone || showParams.some((el) => el.slug === showUrlParam)
 
-            // Check if showUrlParam is in hideParams
-            const shouldHide = hideParams.some((el) => el.slug === showUrlParam)
+          //   // Check if showUrlParam is in hideParams
+          //   const shouldHide = hideParams.some((el) => el.slug === showUrlParam)
 
-            // Logic to decide rendering
-            if (!shouldShow || shouldHide) {
-              return null
-            }
-          }
+          //   // Logic to decide rendering
+          //   if (!shouldShow || shouldHide) {
+          //     return null
+          //   }
+          // }
 
           if (blockType && blockType in blockComponentsMap) {
             const Block = blockComponentsMap[blockType]

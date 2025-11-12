@@ -6,7 +6,6 @@ import { getPayload } from "payload"
 import React from "react"
 
 import { Blocks } from "../../../components/Blocks"
-import { Hero } from "../../../components/Hero"
 import { generateMeta } from "../../../utilities/generateMeta"
 import { Locale, defaultLocale } from "ROOT/locales/locales"
 import { generatePageSlug } from "@app/utilities/generatePageSlug"
@@ -14,7 +13,7 @@ import { RightSidebar } from "@app/components/Sidebar"
 import { cn } from "@app/utilities/cn"
 import { draftMode, headers } from "next/headers"
 import { Page as PageType } from "@payload-types"
-import { Footer } from "@app/components/Footer"
+// import { Footer } from "@app/components/Footer"
 import { getMeUser } from "@app/utilities/getMeUser"
 
 export const dynamic = "force-dynamic"
@@ -61,9 +60,8 @@ export default async function Page({
   const meUser = await getMeUser()
 
   const {
-    hero,
     layout,
-    globalsToShow: { footer, rightSidebar },
+    globalsToShow: { rightSidebar },
   } = page
 
   return (
@@ -75,7 +73,6 @@ export default async function Page({
         )}
       >
         <PayloadRedirects disableNotFound url={url} locale={locale} />
-        <Hero {...hero} />
 
         <div className={cn("flex-grow", rightSidebar && "block sm:flex")}>
           <div className="container">
@@ -92,8 +89,6 @@ export default async function Page({
             params={{ locale, url, slugs }}
           />
         </div>
-
-        <Footer locale={locale} show={footer} className="container mt-auto" />
       </article>
     </>
   )
@@ -108,11 +103,21 @@ export async function generateMetadata({
   }>
 }): Promise<Metadata> {
   const { slugs = ["home"], locale } = await params
-  const { slug } = generatePageSlug(slugs)
+  const {
+    slug,
+    // urlSlugs
+  } = generatePageSlug(slugs)
+
+  // Gets either the first argument of the url (checks if it is a collection)
+  // Or uses Pages
+  // Meant to render
+  // const collectionSlug = urlSlugs[0]
+  // const collection = collectionSlug === "blogs" ? "blogs" : "pages"
 
   const page = await queryPageBySlug({
     collection: "pages",
     locale,
+    // slug: collection === "blogs" && urlSlugs && urlSlugs[1] ? urlSlugs[1] : slug,
     slug,
   })
   return generateMeta({ doc: page })

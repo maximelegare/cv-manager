@@ -1,9 +1,6 @@
 import type { CollectionConfig } from "payload"
-import { CallToAction } from "../../../blocks/layouts/CallToAction/config"
+
 import { Content } from "../../../blocks/layouts/Content/config"
-import { MediaBlock } from "../../../blocks/layouts/MediaBlock/config"
-import { FormBlock } from "../../../blocks/layouts/Form/config"
-import { hero } from "@app/heros/config"
 
 import { revalidatePage } from "./hooks/revalidatePage"
 import { ItemsListBlock } from "@app/blocks/layouts/ItemsListBlock/config"
@@ -14,6 +11,7 @@ import { slugField } from "@app/payload/fields/slug"
 import { DynamicContent } from "@app/blocks/layouts/DynamicContent/config"
 import switchField from "@app/payload/fields/switch/config"
 import { TitleSectionBlock } from "@app/blocks/layouts/TitleSectionBlock/config"
+import { DocumentViewerBlock } from "@app/blocks/layouts/DocumentViewer/config"
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -92,10 +90,6 @@ export const Pages: CollectionConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "Hero",
-          fields: [hero],
-        },
-        {
           label: "Content",
           fields: [
             {
@@ -103,13 +97,11 @@ export const Pages: CollectionConfig = {
               type: "blocks",
               localized: true,
               blocks: [
-                CallToAction,
                 Content,
-                MediaBlock,
-                FormBlock,
                 ItemsListBlock,
                 DynamicContent,
                 TitleSectionBlock,
+                DocumentViewerBlock,
               ],
             },
           ],

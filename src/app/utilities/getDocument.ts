@@ -14,7 +14,6 @@ type Collection = Exclude<
   | "users"
   | "search-param-keys"
   | "search-param-values"
-  | "optionsBars"
   | "redirects"
   | "forms"
   | "form-submissions"

@@ -71,7 +71,8 @@ export interface Config {
     media: Media;
     users: User;
     links: Link;
-    cv: Cv;
+    cvs: Cv;
+    letters: Letter;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -85,7 +86,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     links: LinksSelect<false> | LinksSelect<true>;
-    cv: CvSelect<false> | CvSelect<true>;
+    cvs: CvsSelect<false> | CvsSelect<true>;
+    letters: LettersSelect<false> | LettersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -100,17 +102,17 @@ export interface Config {
     header: Header;
     footer: Footer;
     sideDrawer: SideDrawer;
-    getInTouch: GetInTouch;
     settings: Settings;
     sidebars: Sidebars;
+    getInTouch: GetInTouch;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     sideDrawer: SideDrawerSelect<false> | SideDrawerSelect<true>;
-    getInTouch: GetInTouchSelect<false> | GetInTouchSelect<true>;
     settings: SettingsSelect<false> | SettingsSelect<true>;
     sidebars: SidebarsSelect<false> | SidebarsSelect<true>;
+    getInTouch: GetInTouchSelect<false> | GetInTouchSelect<true>;
   };
   locale: 'fr' | 'en';
   user: User & {
@@ -151,116 +153,8 @@ export interface Page {
     rightSidebar?: boolean | null;
     footer?: boolean | null;
   };
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: string;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom' | 'current') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            /**
-             * Dictates how the link should be rendered.
-             */
-            appearance?:
-              | (
-                  | 'default'
-                  | 'destructive'
-                  | 'ghost'
-                  | 'link'
-                  | 'outline'
-                  | 'text'
-                  | 'secondary'
-                  | 'underline'
-                  | 'iconOnly'
-                  | 'menu'
-                  | 'categoryLabel'
-                  | 'richtextLink'
-                  | 'sideDrawer'
-                )
-              | null;
-            /**
-             * Highlights the link based on the URL
-             */
-            isActive?: ('default' | 'exact' | 'never') | null;
-            isSheet?: boolean | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    hasRightSideMedia?: boolean | null;
-    rightSideMedia?: (string | null) | Media;
-    hasBackgroundTextOverlay?: boolean | null;
-    backgroundTextOverlay?: string | null;
-    media?: (string | null) | Media;
-  };
   layout?:
     | (
-        | {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            links?:
-              | {
-                  link: {
-                    type?: ('reference' | 'custom' | 'current') | null;
-                    newTab?: boolean | null;
-                    reference?: {
-                      relationTo: 'pages';
-                      value: string | Page;
-                    } | null;
-                    url?: string | null;
-                    label: string;
-                    /**
-                     * Dictates how the link should be rendered.
-                     */
-                    appearance?: ('default' | 'outline') | null;
-                    /**
-                     * Highlights the link based on the URL
-                     */
-                    isActive?: ('default' | 'exact' | 'never') | null;
-                    isSheet?: boolean | null;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'cta';
-          }
         | {
             hasMultipleColumns?: boolean | null;
             columns?:
@@ -304,6 +198,7 @@ export interface Page {
                           | 'text'
                           | 'secondary'
                           | 'underline'
+                          | 'underlineSimple'
                           | 'iconOnly'
                           | 'menu'
                           | 'categoryLabel'
@@ -359,6 +254,7 @@ export interface Page {
                       | 'text'
                       | 'secondary'
                       | 'underline'
+                      | 'underlineSimple'
                       | 'iconOnly'
                       | 'menu'
                       | 'categoryLabel'
@@ -379,47 +275,10 @@ export interface Page {
             blockType: 'content';
           }
         | {
-            position?: ('default' | 'fullscreen') | null;
-            media: string | Media;
-            gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'mediaBlock';
-          }
-        | {
-            form: string | Form;
-            enableIntro?: boolean | null;
-            introContent?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-        | {
             blockTitle: string;
-            populateBy: 'collection' | 'featured' | 'specificList';
-            relationTo?: ('categories' | 'blogs') | null;
-            featured?: {
-              relationTo?: ('categories' | 'blogs') | null;
-            };
-            specificList?: {
-              links?: (string | Link)[] | null;
-            };
-            cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
+            populateBy: 'collection';
+            relationTo?: ('cvs' | 'letters') | null;
+            cardVariant?: ('cv' | 'link' | 'letter') | null;
             layout?: ('grid' | 'carousel' | 'horizontalScroll' | 'verticalList' | 'horizontalWrap') | null;
             imageSelector?: ('images' | 'dots') | null;
             hasLimit?: boolean | null;
@@ -456,6 +315,12 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'titleSection';
+          }
+        | {
+            type?: ('cv' | 'letter') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'documentViewer';
           }
       )[]
     | null;
@@ -506,6 +371,738 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  roles?: ('super' | 'admin' | 'user')[] | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links".
+ */
+export interface Link {
+  id: string;
+  title: string;
+  link: {
+    type?: ('reference' | 'custom' | 'current') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+    /**
+     * Dictates how the link should be rendered.
+     */
+    appearance?:
+      | (
+          | 'default'
+          | 'destructive'
+          | 'ghost'
+          | 'link'
+          | 'outline'
+          | 'text'
+          | 'secondary'
+          | 'underline'
+          | 'underlineSimple'
+          | 'iconOnly'
+          | 'menu'
+          | 'categoryLabel'
+          | 'richtextLink'
+          | 'sideDrawer'
+        )
+      | null;
+    /**
+     * Highlights the link based on the URL
+     */
+    isActive?: ('default' | 'exact' | 'never') | null;
+    isSheet?: boolean | null;
+  };
+  logo?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cvs".
+ */
+export interface Cv {
+  id: string;
+  publishedOn?: string | null;
+  slug: string;
+  infos?: {
+    /**
+     * Fill in your contact infos in the global Get In Touch section.
+     */
+    jobTitle?: string | null;
+  };
+  introduction: {
+    tabName?: string | null;
+    content: (
+      | {
+          hasMultipleColumns?: boolean | null;
+          columns?:
+            | {
+                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                richText?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
+                enableLink?: boolean | null;
+                link?: {
+                  type?: ('reference' | 'custom' | 'current') | null;
+                  newTab?: boolean | null;
+                  reference?: {
+                    relationTo: 'pages';
+                    value: string | Page;
+                  } | null;
+                  url?: string | null;
+                  label: string;
+                  /**
+                   * Dictates how the link should be rendered.
+                   */
+                  appearance?:
+                    | (
+                        | 'default'
+                        | 'destructive'
+                        | 'ghost'
+                        | 'link'
+                        | 'outline'
+                        | 'text'
+                        | 'secondary'
+                        | 'underline'
+                        | 'underlineSimple'
+                        | 'iconOnly'
+                        | 'menu'
+                        | 'categoryLabel'
+                        | 'richtextLink'
+                        | 'sideDrawer'
+                      )
+                    | null;
+                  /**
+                   * Highlights the link based on the URL
+                   */
+                  isActive?: ('default' | 'exact' | 'never') | null;
+                  isSheet?: boolean | null;
+                };
+                id?: string | null;
+              }[]
+            | null;
+          column?: {
+            richText?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            enableLink?: boolean | null;
+            link?: {
+              type?: ('reference' | 'custom' | 'current') | null;
+              newTab?: boolean | null;
+              reference?: {
+                relationTo: 'pages';
+                value: string | Page;
+              } | null;
+              url?: string | null;
+              label: string;
+              /**
+               * Dictates how the link should be rendered.
+               */
+              appearance?:
+                | (
+                    | 'default'
+                    | 'destructive'
+                    | 'ghost'
+                    | 'link'
+                    | 'outline'
+                    | 'text'
+                    | 'secondary'
+                    | 'underline'
+                    | 'underlineSimple'
+                    | 'iconOnly'
+                    | 'menu'
+                    | 'categoryLabel'
+                    | 'richtextLink'
+                    | 'sideDrawer'
+                  )
+                | null;
+              /**
+               * Highlights the link based on the URL
+               */
+              isActive?: ('default' | 'exact' | 'never') | null;
+              isSheet?: boolean | null;
+            };
+          };
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'content';
+        }
+      | {
+          type?: ('highImpact' | 'lowImpact' | 'mediumImpact') | null;
+          /**
+           * Only available for dynamic-content
+           */
+          useDocuementFields?: boolean | null;
+          title?: string | null;
+          subtitle?: string | null;
+          showImage?: boolean | null;
+          image?: (string | null) | Media;
+          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'titleSection';
+        }
+    )[];
+  };
+  skills?: {
+    pages?:
+      | {
+          competences?: {
+            tabName?: string | null;
+            softSkills?:
+              | {
+                  title?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            hardSkills?:
+              | {
+                  title?: string | null;
+                  level?: ('beginner' | 'intermediate' | 'advanced') | null;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          education?: {
+            tabName?: string | null;
+            education?:
+              | {
+                  program?: string | null;
+                  school?: string | null;
+                  startDate?: string | null;
+                  endDate?: string | null;
+                  content?:
+                    | {
+                        hasMultipleColumns?: boolean | null;
+                        columns?:
+                          | {
+                              size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                              richText?: {
+                                root: {
+                                  type: string;
+                                  children: {
+                                    type: string;
+                                    version: number;
+                                    [k: string]: unknown;
+                                  }[];
+                                  direction: ('ltr' | 'rtl') | null;
+                                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                  indent: number;
+                                  version: number;
+                                };
+                                [k: string]: unknown;
+                              } | null;
+                              enableLink?: boolean | null;
+                              link?: {
+                                type?: ('reference' | 'custom' | 'current') | null;
+                                newTab?: boolean | null;
+                                reference?: {
+                                  relationTo: 'pages';
+                                  value: string | Page;
+                                } | null;
+                                url?: string | null;
+                                label: string;
+                                /**
+                                 * Dictates how the link should be rendered.
+                                 */
+                                appearance?:
+                                  | (
+                                      | 'default'
+                                      | 'destructive'
+                                      | 'ghost'
+                                      | 'link'
+                                      | 'outline'
+                                      | 'text'
+                                      | 'secondary'
+                                      | 'underline'
+                                      | 'underlineSimple'
+                                      | 'iconOnly'
+                                      | 'menu'
+                                      | 'categoryLabel'
+                                      | 'richtextLink'
+                                      | 'sideDrawer'
+                                    )
+                                  | null;
+                                /**
+                                 * Highlights the link based on the URL
+                                 */
+                                isActive?: ('default' | 'exact' | 'never') | null;
+                                isSheet?: boolean | null;
+                              };
+                              id?: string | null;
+                            }[]
+                          | null;
+                        column?: {
+                          richText?: {
+                            root: {
+                              type: string;
+                              children: {
+                                type: string;
+                                version: number;
+                                [k: string]: unknown;
+                              }[];
+                              direction: ('ltr' | 'rtl') | null;
+                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                              indent: number;
+                              version: number;
+                            };
+                            [k: string]: unknown;
+                          } | null;
+                          enableLink?: boolean | null;
+                          link?: {
+                            type?: ('reference' | 'custom' | 'current') | null;
+                            newTab?: boolean | null;
+                            reference?: {
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null;
+                            url?: string | null;
+                            label: string;
+                            /**
+                             * Dictates how the link should be rendered.
+                             */
+                            appearance?:
+                              | (
+                                  | 'default'
+                                  | 'destructive'
+                                  | 'ghost'
+                                  | 'link'
+                                  | 'outline'
+                                  | 'text'
+                                  | 'secondary'
+                                  | 'underline'
+                                  | 'underlineSimple'
+                                  | 'iconOnly'
+                                  | 'menu'
+                                  | 'categoryLabel'
+                                  | 'richtextLink'
+                                  | 'sideDrawer'
+                                )
+                              | null;
+                            /**
+                             * Highlights the link based on the URL
+                             */
+                            isActive?: ('default' | 'exact' | 'never') | null;
+                            isSheet?: boolean | null;
+                          };
+                        };
+                        gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'content';
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          experiences?: {
+            tabName?: string | null;
+            experience?:
+              | {
+                  title?: string | null;
+                  hasLink?: boolean | null;
+                  link?: {
+                    type?: ('reference' | 'custom' | 'current') | null;
+                    newTab?: boolean | null;
+                    reference?: {
+                      relationTo: 'pages';
+                      value: string | Page;
+                    } | null;
+                    url?: string | null;
+                    label: string;
+                    /**
+                     * Dictates how the link should be rendered.
+                     */
+                    appearance?:
+                      | (
+                          | 'default'
+                          | 'destructive'
+                          | 'ghost'
+                          | 'link'
+                          | 'outline'
+                          | 'text'
+                          | 'secondary'
+                          | 'underline'
+                          | 'underlineSimple'
+                          | 'iconOnly'
+                          | 'menu'
+                          | 'categoryLabel'
+                          | 'richtextLink'
+                          | 'sideDrawer'
+                        )
+                      | null;
+                    /**
+                     * Highlights the link based on the URL
+                     */
+                    isActive?: ('default' | 'exact' | 'never') | null;
+                    isSheet?: boolean | null;
+                  };
+                  company?: string | null;
+                  description?: string | null;
+                  startDate?: string | null;
+                  toPresent?: boolean | null;
+                  endDate?: string | null;
+                  content?:
+                    | {
+                        hasMultipleColumns?: boolean | null;
+                        columns?:
+                          | {
+                              size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+                              richText?: {
+                                root: {
+                                  type: string;
+                                  children: {
+                                    type: string;
+                                    version: number;
+                                    [k: string]: unknown;
+                                  }[];
+                                  direction: ('ltr' | 'rtl') | null;
+                                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                                  indent: number;
+                                  version: number;
+                                };
+                                [k: string]: unknown;
+                              } | null;
+                              enableLink?: boolean | null;
+                              link?: {
+                                type?: ('reference' | 'custom' | 'current') | null;
+                                newTab?: boolean | null;
+                                reference?: {
+                                  relationTo: 'pages';
+                                  value: string | Page;
+                                } | null;
+                                url?: string | null;
+                                label: string;
+                                /**
+                                 * Dictates how the link should be rendered.
+                                 */
+                                appearance?:
+                                  | (
+                                      | 'default'
+                                      | 'destructive'
+                                      | 'ghost'
+                                      | 'link'
+                                      | 'outline'
+                                      | 'text'
+                                      | 'secondary'
+                                      | 'underline'
+                                      | 'underlineSimple'
+                                      | 'iconOnly'
+                                      | 'menu'
+                                      | 'categoryLabel'
+                                      | 'richtextLink'
+                                      | 'sideDrawer'
+                                    )
+                                  | null;
+                                /**
+                                 * Highlights the link based on the URL
+                                 */
+                                isActive?: ('default' | 'exact' | 'never') | null;
+                                isSheet?: boolean | null;
+                              };
+                              id?: string | null;
+                            }[]
+                          | null;
+                        column?: {
+                          richText?: {
+                            root: {
+                              type: string;
+                              children: {
+                                type: string;
+                                version: number;
+                                [k: string]: unknown;
+                              }[];
+                              direction: ('ltr' | 'rtl') | null;
+                              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                              indent: number;
+                              version: number;
+                            };
+                            [k: string]: unknown;
+                          } | null;
+                          enableLink?: boolean | null;
+                          link?: {
+                            type?: ('reference' | 'custom' | 'current') | null;
+                            newTab?: boolean | null;
+                            reference?: {
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null;
+                            url?: string | null;
+                            label: string;
+                            /**
+                             * Dictates how the link should be rendered.
+                             */
+                            appearance?:
+                              | (
+                                  | 'default'
+                                  | 'destructive'
+                                  | 'ghost'
+                                  | 'link'
+                                  | 'outline'
+                                  | 'text'
+                                  | 'secondary'
+                                  | 'underline'
+                                  | 'underlineSimple'
+                                  | 'iconOnly'
+                                  | 'menu'
+                                  | 'categoryLabel'
+                                  | 'richtextLink'
+                                  | 'sideDrawer'
+                                )
+                              | null;
+                            /**
+                             * Highlights the link based on the URL
+                             */
+                            isActive?: ('default' | 'exact' | 'never') | null;
+                            isSheet?: boolean | null;
+                          };
+                        };
+                        gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+                        id?: string | null;
+                        blockName?: string | null;
+                        blockType: 'content';
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          id?: string | null;
+        }[]
+      | null;
+  };
+  parent?: (string | null) | Cv;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Cv;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "letters".
+ */
+export interface Letter {
+  id: string;
+  publishedOn?: string | null;
+  slug: string;
+  company?: {
+    name?: string | null;
+    address?: string | null;
+    city?: string | null;
+    country?: string | null;
+    zip?: string | null;
+    phone?: string | null;
+  };
+  letter: {
+    subject: string;
+    content: {
+      hasMultipleColumns?: boolean | null;
+      columns?:
+        | {
+            size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+            richText?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            enableLink?: boolean | null;
+            link?: {
+              type?: ('reference' | 'custom' | 'current') | null;
+              newTab?: boolean | null;
+              reference?: {
+                relationTo: 'pages';
+                value: string | Page;
+              } | null;
+              url?: string | null;
+              label: string;
+              /**
+               * Dictates how the link should be rendered.
+               */
+              appearance?:
+                | (
+                    | 'default'
+                    | 'destructive'
+                    | 'ghost'
+                    | 'link'
+                    | 'outline'
+                    | 'text'
+                    | 'secondary'
+                    | 'underline'
+                    | 'underlineSimple'
+                    | 'iconOnly'
+                    | 'menu'
+                    | 'categoryLabel'
+                    | 'richtextLink'
+                    | 'sideDrawer'
+                  )
+                | null;
+              /**
+               * Highlights the link based on the URL
+               */
+              isActive?: ('default' | 'exact' | 'never') | null;
+              isSheet?: boolean | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
+      column?: {
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom' | 'current') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Dictates how the link should be rendered.
+           */
+          appearance?:
+            | (
+                | 'default'
+                | 'destructive'
+                | 'ghost'
+                | 'link'
+                | 'outline'
+                | 'text'
+                | 'secondary'
+                | 'underline'
+                | 'underlineSimple'
+                | 'iconOnly'
+                | 'menu'
+                | 'categoryLabel'
+                | 'richtextLink'
+                | 'sideDrawer'
+              )
+            | null;
+          /**
+           * Highlights the link based on the URL
+           */
+          isActive?: ('default' | 'exact' | 'never') | null;
+          isSheet?: boolean | null;
+        };
+      };
+      gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
+      id?: string | null;
+      blockName?: string | null;
+      blockType: 'content';
+    }[];
+  };
+  parent?: (string | null) | Letter;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Letter;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: string;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
+  from: string;
+  to?: {
+    type?: ('reference' | 'custom') | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -683,554 +1280,6 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "links".
- */
-export interface Link {
-  id: string;
-  title: string;
-  link: {
-    type?: ('reference' | 'custom' | 'current') | null;
-    newTab?: boolean | null;
-    reference?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-    url?: string | null;
-    label: string;
-    /**
-     * Dictates how the link should be rendered.
-     */
-    appearance?:
-      | (
-          | 'default'
-          | 'destructive'
-          | 'ghost'
-          | 'link'
-          | 'outline'
-          | 'text'
-          | 'secondary'
-          | 'underline'
-          | 'iconOnly'
-          | 'menu'
-          | 'categoryLabel'
-          | 'richtextLink'
-          | 'sideDrawer'
-        )
-      | null;
-    /**
-     * Highlights the link based on the URL
-     */
-    isActive?: ('default' | 'exact' | 'never') | null;
-    isSheet?: boolean | null;
-  };
-  logo?: (string | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-  id: string;
-  name?: string | null;
-  roles?: ('super' | 'admin' | 'user')[] | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cv".
- */
-export interface Cv {
-  id: string;
-  publishedOn?: string | null;
-  slug: string;
-  infos?: {
-    name?: string | null;
-    jobTitle?: string | null;
-    contactInfos?:
-      | {
-          isLink?: boolean | null;
-          label?: string | null;
-          value?: string | null;
-          link?: {
-            type?: ('reference' | 'custom' | 'current') | null;
-            newTab?: boolean | null;
-            reference?: {
-              relationTo: 'pages';
-              value: string | Page;
-            } | null;
-            url?: string | null;
-            label: string;
-            /**
-             * Dictates how the link should be rendered.
-             */
-            appearance?:
-              | (
-                  | 'default'
-                  | 'destructive'
-                  | 'ghost'
-                  | 'link'
-                  | 'outline'
-                  | 'text'
-                  | 'secondary'
-                  | 'underline'
-                  | 'iconOnly'
-                  | 'menu'
-                  | 'categoryLabel'
-                  | 'richtextLink'
-                  | 'sideDrawer'
-                )
-              | null;
-            /**
-             * Highlights the link based on the URL
-             */
-            isActive?: ('default' | 'exact' | 'never') | null;
-            isSheet?: boolean | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  Introduction: {
-    content: (
-      | {
-          hasMultipleColumns?: boolean | null;
-          columns?:
-            | {
-                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-                richText?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                enableLink?: boolean | null;
-                link?: {
-                  type?: ('reference' | 'custom' | 'current') | null;
-                  newTab?: boolean | null;
-                  reference?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  label: string;
-                  /**
-                   * Dictates how the link should be rendered.
-                   */
-                  appearance?:
-                    | (
-                        | 'default'
-                        | 'destructive'
-                        | 'ghost'
-                        | 'link'
-                        | 'outline'
-                        | 'text'
-                        | 'secondary'
-                        | 'underline'
-                        | 'iconOnly'
-                        | 'menu'
-                        | 'categoryLabel'
-                        | 'richtextLink'
-                        | 'sideDrawer'
-                      )
-                    | null;
-                  /**
-                   * Highlights the link based on the URL
-                   */
-                  isActive?: ('default' | 'exact' | 'never') | null;
-                  isSheet?: boolean | null;
-                };
-                id?: string | null;
-              }[]
-            | null;
-          column?: {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            enableLink?: boolean | null;
-            link?: {
-              type?: ('reference' | 'custom' | 'current') | null;
-              newTab?: boolean | null;
-              reference?: {
-                relationTo: 'pages';
-                value: string | Page;
-              } | null;
-              url?: string | null;
-              label: string;
-              /**
-               * Dictates how the link should be rendered.
-               */
-              appearance?:
-                | (
-                    | 'default'
-                    | 'destructive'
-                    | 'ghost'
-                    | 'link'
-                    | 'outline'
-                    | 'text'
-                    | 'secondary'
-                    | 'underline'
-                    | 'iconOnly'
-                    | 'menu'
-                    | 'categoryLabel'
-                    | 'richtextLink'
-                    | 'sideDrawer'
-                  )
-                | null;
-              /**
-               * Highlights the link based on the URL
-               */
-              isActive?: ('default' | 'exact' | 'never') | null;
-              isSheet?: boolean | null;
-            };
-          };
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }
-      | {
-          type?: ('highImpact' | 'lowImpact' | 'mediumImpact') | null;
-          /**
-           * Only available for dynamic-content
-           */
-          useDocuementFields?: boolean | null;
-          title?: string | null;
-          subtitle?: string | null;
-          showImage?: boolean | null;
-          image?: (string | null) | Media;
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'titleSection';
-        }
-    )[];
-  };
-  Competences?: {
-    hardSkills?:
-      | {
-          title?: string | null;
-          softSkills?:
-            | {
-                title?: string | null;
-                level?: ('beginner' | 'intermediate' | 'advanced') | null;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  Experiences?: {
-    role?: string | null;
-    company?: string | null;
-    description?: string | null;
-    startDate?: string | null;
-    toPresent?: boolean | null;
-    endDate?: string | null;
-    content?:
-      | {
-          hasMultipleColumns?: boolean | null;
-          columns?:
-            | {
-                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-                richText?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                enableLink?: boolean | null;
-                link?: {
-                  type?: ('reference' | 'custom' | 'current') | null;
-                  newTab?: boolean | null;
-                  reference?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  label: string;
-                  /**
-                   * Dictates how the link should be rendered.
-                   */
-                  appearance?:
-                    | (
-                        | 'default'
-                        | 'destructive'
-                        | 'ghost'
-                        | 'link'
-                        | 'outline'
-                        | 'text'
-                        | 'secondary'
-                        | 'underline'
-                        | 'iconOnly'
-                        | 'menu'
-                        | 'categoryLabel'
-                        | 'richtextLink'
-                        | 'sideDrawer'
-                      )
-                    | null;
-                  /**
-                   * Highlights the link based on the URL
-                   */
-                  isActive?: ('default' | 'exact' | 'never') | null;
-                  isSheet?: boolean | null;
-                };
-                id?: string | null;
-              }[]
-            | null;
-          column?: {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            enableLink?: boolean | null;
-            link?: {
-              type?: ('reference' | 'custom' | 'current') | null;
-              newTab?: boolean | null;
-              reference?: {
-                relationTo: 'pages';
-                value: string | Page;
-              } | null;
-              url?: string | null;
-              label: string;
-              /**
-               * Dictates how the link should be rendered.
-               */
-              appearance?:
-                | (
-                    | 'default'
-                    | 'destructive'
-                    | 'ghost'
-                    | 'link'
-                    | 'outline'
-                    | 'text'
-                    | 'secondary'
-                    | 'underline'
-                    | 'iconOnly'
-                    | 'menu'
-                    | 'categoryLabel'
-                    | 'richtextLink'
-                    | 'sideDrawer'
-                  )
-                | null;
-              /**
-               * Highlights the link based on the URL
-               */
-              isActive?: ('default' | 'exact' | 'never') | null;
-              isSheet?: boolean | null;
-            };
-          };
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }[]
-      | null;
-  };
-  Education?: {
-    program?: string | null;
-    school?: string | null;
-    startDate?: string | null;
-    endDate?: string | null;
-    content?:
-      | {
-          hasMultipleColumns?: boolean | null;
-          columns?:
-            | {
-                size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-                richText?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                enableLink?: boolean | null;
-                link?: {
-                  type?: ('reference' | 'custom' | 'current') | null;
-                  newTab?: boolean | null;
-                  reference?: {
-                    relationTo: 'pages';
-                    value: string | Page;
-                  } | null;
-                  url?: string | null;
-                  label: string;
-                  /**
-                   * Dictates how the link should be rendered.
-                   */
-                  appearance?:
-                    | (
-                        | 'default'
-                        | 'destructive'
-                        | 'ghost'
-                        | 'link'
-                        | 'outline'
-                        | 'text'
-                        | 'secondary'
-                        | 'underline'
-                        | 'iconOnly'
-                        | 'menu'
-                        | 'categoryLabel'
-                        | 'richtextLink'
-                        | 'sideDrawer'
-                      )
-                    | null;
-                  /**
-                   * Highlights the link based on the URL
-                   */
-                  isActive?: ('default' | 'exact' | 'never') | null;
-                  isSheet?: boolean | null;
-                };
-                id?: string | null;
-              }[]
-            | null;
-          column?: {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            enableLink?: boolean | null;
-            link?: {
-              type?: ('reference' | 'custom' | 'current') | null;
-              newTab?: boolean | null;
-              reference?: {
-                relationTo: 'pages';
-                value: string | Page;
-              } | null;
-              url?: string | null;
-              label: string;
-              /**
-               * Dictates how the link should be rendered.
-               */
-              appearance?:
-                | (
-                    | 'default'
-                    | 'destructive'
-                    | 'ghost'
-                    | 'link'
-                    | 'outline'
-                    | 'text'
-                    | 'secondary'
-                    | 'underline'
-                    | 'iconOnly'
-                    | 'menu'
-                    | 'categoryLabel'
-                    | 'richtextLink'
-                    | 'sideDrawer'
-                  )
-                | null;
-              /**
-               * Highlights the link based on the URL
-               */
-              isActive?: ('default' | 'exact' | 'never') | null;
-              isSheet?: boolean | null;
-            };
-          };
-          gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'content';
-        }[]
-      | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
- */
-export interface Redirect {
-  id: string;
-  /**
-   * You will need to rebuild the website when changing this field.
-   */
-  from: string;
-  to?: {
-    type?: ('reference' | 'custom') | null;
-    reference?: {
-      relationTo: 'pages';
-      value: string | Page;
-    } | null;
-    url?: string | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1270,8 +1319,12 @@ export interface PayloadLockedDocument {
         value: string | Link;
       } | null)
     | ({
-        relationTo: 'cv';
+        relationTo: 'cvs';
         value: string | Cv;
+      } | null)
+    | ({
+        relationTo: 'letters';
+        value: string | Letter;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1340,62 +1393,9 @@ export interface PagesSelect<T extends boolean = true> {
         rightSidebar?: T;
         footer?: T;
       };
-  hero?:
-    | T
-    | {
-        type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                    isActive?: T;
-                    isSheet?: T;
-                  };
-              id?: T;
-            };
-        hasRightSideMedia?: T;
-        rightSideMedia?: T;
-        hasBackgroundTextOverlay?: T;
-        backgroundTextOverlay?: T;
-        media?: T;
-      };
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                          isActive?: T;
-                          isSheet?: T;
-                        };
-                    id?: T;
-                  };
-              gutter?: T;
-              id?: T;
-              blockName?: T;
-            };
         content?:
           | T
           | {
@@ -1442,41 +1442,12 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        mediaBlock?:
-          | T
-          | {
-              position?: T;
-              media?: T;
-              gutter?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              gutter?: T;
-              id?: T;
-              blockName?: T;
-            };
         itemsList?:
           | T
           | {
               blockTitle?: T;
               populateBy?: T;
               relationTo?: T;
-              featured?:
-                | T
-                | {
-                    relationTo?: T;
-                  };
-              specificList?:
-                | T
-                | {
-                    links?: T;
-                  };
               cardVariant?: T;
               layout?: T;
               imageSelector?: T;
@@ -1510,6 +1481,13 @@ export interface PagesSelect<T extends boolean = true> {
               showImage?: T;
               image?: T;
               gutter?: T;
+              id?: T;
+              blockName?: T;
+            };
+        documentViewer?:
+          | T
+          | {
+              type?: T;
               id?: T;
               blockName?: T;
             };
@@ -1587,40 +1565,20 @@ export interface LinksSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cv_select".
+ * via the `definition` "cvs_select".
  */
-export interface CvSelect<T extends boolean = true> {
+export interface CvsSelect<T extends boolean = true> {
   publishedOn?: T;
   slug?: T;
   infos?:
     | T
     | {
-        name?: T;
         jobTitle?: T;
-        contactInfos?:
-          | T
-          | {
-              isLink?: T;
-              label?: T;
-              value?: T;
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                    isActive?: T;
-                    isSheet?: T;
-                  };
-              id?: T;
-            };
       };
-  Introduction?:
+  introduction?:
     | T
     | {
+        tabName?: T;
         content?:
           | T
           | {
@@ -1685,32 +1643,210 @@ export interface CvSelect<T extends boolean = true> {
                   };
             };
       };
-  Competences?:
+  skills?:
     | T
     | {
-        hardSkills?:
+        pages?:
           | T
           | {
-              title?: T;
-              softSkills?:
+              competences?:
                 | T
                 | {
-                    title?: T;
-                    level?: T;
-                    id?: T;
+                    tabName?: T;
+                    softSkills?:
+                      | T
+                      | {
+                          title?: T;
+                          id?: T;
+                        };
+                    hardSkills?:
+                      | T
+                      | {
+                          title?: T;
+                          level?: T;
+                          id?: T;
+                        };
+                  };
+              education?:
+                | T
+                | {
+                    tabName?: T;
+                    education?:
+                      | T
+                      | {
+                          program?: T;
+                          school?: T;
+                          startDate?: T;
+                          endDate?: T;
+                          content?:
+                            | T
+                            | {
+                                content?:
+                                  | T
+                                  | {
+                                      hasMultipleColumns?: T;
+                                      columns?:
+                                        | T
+                                        | {
+                                            size?: T;
+                                            richText?: T;
+                                            enableLink?: T;
+                                            link?:
+                                              | T
+                                              | {
+                                                  type?: T;
+                                                  newTab?: T;
+                                                  reference?: T;
+                                                  url?: T;
+                                                  label?: T;
+                                                  appearance?: T;
+                                                  isActive?: T;
+                                                  isSheet?: T;
+                                                };
+                                            id?: T;
+                                          };
+                                      column?:
+                                        | T
+                                        | {
+                                            richText?: T;
+                                            enableLink?: T;
+                                            link?:
+                                              | T
+                                              | {
+                                                  type?: T;
+                                                  newTab?: T;
+                                                  reference?: T;
+                                                  url?: T;
+                                                  label?: T;
+                                                  appearance?: T;
+                                                  isActive?: T;
+                                                  isSheet?: T;
+                                                };
+                                          };
+                                      gutter?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                        };
+                  };
+              experiences?:
+                | T
+                | {
+                    tabName?: T;
+                    experience?:
+                      | T
+                      | {
+                          title?: T;
+                          hasLink?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                                appearance?: T;
+                                isActive?: T;
+                                isSheet?: T;
+                              };
+                          company?: T;
+                          description?: T;
+                          startDate?: T;
+                          toPresent?: T;
+                          endDate?: T;
+                          content?:
+                            | T
+                            | {
+                                content?:
+                                  | T
+                                  | {
+                                      hasMultipleColumns?: T;
+                                      columns?:
+                                        | T
+                                        | {
+                                            size?: T;
+                                            richText?: T;
+                                            enableLink?: T;
+                                            link?:
+                                              | T
+                                              | {
+                                                  type?: T;
+                                                  newTab?: T;
+                                                  reference?: T;
+                                                  url?: T;
+                                                  label?: T;
+                                                  appearance?: T;
+                                                  isActive?: T;
+                                                  isSheet?: T;
+                                                };
+                                            id?: T;
+                                          };
+                                      column?:
+                                        | T
+                                        | {
+                                            richText?: T;
+                                            enableLink?: T;
+                                            link?:
+                                              | T
+                                              | {
+                                                  type?: T;
+                                                  newTab?: T;
+                                                  reference?: T;
+                                                  url?: T;
+                                                  label?: T;
+                                                  appearance?: T;
+                                                  isActive?: T;
+                                                  isSheet?: T;
+                                                };
+                                          };
+                                      gutter?: T;
+                                      id?: T;
+                                      blockName?: T;
+                                    };
+                              };
+                          id?: T;
+                        };
                   };
               id?: T;
             };
       };
-  Experiences?:
+  parent?: T;
+  breadcrumbs?:
     | T
     | {
-        role?: T;
-        company?: T;
-        description?: T;
-        startDate?: T;
-        toPresent?: T;
-        endDate?: T;
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "letters_select".
+ */
+export interface LettersSelect<T extends boolean = true> {
+  publishedOn?: T;
+  slug?: T;
+  company?:
+    | T
+    | {
+        name?: T;
+        address?: T;
+        city?: T;
+        country?: T;
+        zip?: T;
+        phone?: T;
+      };
+  letter?:
+    | T
+    | {
+        subject?: T;
         content?:
           | T
           | {
@@ -1762,63 +1898,14 @@ export interface CvSelect<T extends boolean = true> {
                   };
             };
       };
-  Education?:
+  parent?: T;
+  breadcrumbs?:
     | T
     | {
-        program?: T;
-        school?: T;
-        startDate?: T;
-        endDate?: T;
-        content?:
-          | T
-          | {
-              content?:
-                | T
-                | {
-                    hasMultipleColumns?: T;
-                    columns?:
-                      | T
-                      | {
-                          size?: T;
-                          richText?: T;
-                          enableLink?: T;
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                                isActive?: T;
-                                isSheet?: T;
-                              };
-                          id?: T;
-                        };
-                    column?:
-                      | T
-                      | {
-                          richText?: T;
-                          enableLink?: T;
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                newTab?: T;
-                                reference?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                                isActive?: T;
-                                isSheet?: T;
-                              };
-                        };
-                    gutter?: T;
-                    id?: T;
-                    blockName?: T;
-                  };
-            };
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2027,39 +2114,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
-  links?:
-    | {
-        linkType?: ('link' | 'contextMenu') | null;
-        link?: (string | null) | Link;
-        triggerType?: ('link' | 'text') | null;
-        linkTrigger?: (string | null) | Link;
-        textTrigger?: string | null;
-        contextSections?:
-          | {
-              sectionType?: ('links' | 'socialMedia') | null;
-              sectionTitle: string;
-              text?: {
-                root: {
-                  type: string;
-                  children: {
-                    type: string;
-                    version: number;
-                    [k: string]: unknown;
-                  }[];
-                  direction: ('ltr' | 'rtl') | null;
-                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                  indent: number;
-                  version: number;
-                };
-                [k: string]: unknown;
-              } | null;
-              sectionLinks?: (string | Link)[] | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2127,6 +2181,7 @@ export interface SideDrawer {
                               | 'text'
                               | 'secondary'
                               | 'underline'
+                              | 'underlineSimple'
                               | 'iconOnly'
                               | 'menu'
                               | 'categoryLabel'
@@ -2182,6 +2237,7 @@ export interface SideDrawer {
                           | 'text'
                           | 'secondary'
                           | 'underline'
+                          | 'underlineSimple'
                           | 'iconOnly'
                           | 'menu'
                           | 'categoryLabel'
@@ -2202,39 +2258,10 @@ export interface SideDrawer {
                 blockType: 'content';
               }
             | {
-                form: string | Form;
-                enableIntro?: boolean | null;
-                introContent?: {
-                  root: {
-                    type: string;
-                    children: {
-                      type: string;
-                      version: number;
-                      [k: string]: unknown;
-                    }[];
-                    direction: ('ltr' | 'rtl') | null;
-                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                    indent: number;
-                    version: number;
-                  };
-                  [k: string]: unknown;
-                } | null;
-                gutter: 'small' | 'medium' | 'large' | 'container' | 'none';
-                id?: string | null;
-                blockName?: string | null;
-                blockType: 'formBlock';
-              }
-            | {
                 blockTitle: string;
-                populateBy: 'collection' | 'featured' | 'specificList';
-                relationTo?: ('categories' | 'blogs') | null;
-                featured?: {
-                  relationTo?: ('categories' | 'blogs') | null;
-                };
-                specificList?: {
-                  links?: (string | Link)[] | null;
-                };
-                cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
+                populateBy: 'collection';
+                relationTo?: ('cvs' | 'letters') | null;
+                cardVariant?: ('cv' | 'link' | 'letter') | null;
                 layout?: ('grid' | 'carousel' | 'horizontalScroll' | 'verticalList' | 'horizontalWrap') | null;
                 imageSelector?: ('images' | 'dots') | null;
                 hasLimit?: boolean | null;
@@ -2270,24 +2297,6 @@ export interface SideDrawer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "getInTouch".
- */
-export interface GetInTouch {
-  id: string;
-  email?: string | null;
-  phoneNumber?: string | null;
-  socials?:
-    | {
-        plateform?: ('facebook' | 'instagram' | 'pinterest') | null;
-        link?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings".
  */
 export interface Settings {
@@ -2309,15 +2318,9 @@ export interface Sidebars {
       | (
           | {
               blockTitle: string;
-              populateBy: 'collection' | 'featured' | 'specificList';
-              relationTo?: ('categories' | 'blogs') | null;
-              featured?: {
-                relationTo?: ('categories' | 'blogs') | null;
-              };
-              specificList?: {
-                links?: (string | Link)[] | null;
-              };
-              cardVariant?: ('category' | 'blog' | 'blog-condensed' | 'category-label' | 'link') | null;
+              populateBy: 'collection';
+              relationTo?: ('cvs' | 'letters') | null;
+              cardVariant?: ('cv' | 'link' | 'letter') | null;
               layout?: ('grid' | 'carousel' | 'horizontalScroll' | 'verticalList' | 'horizontalWrap') | null;
               imageSelector?: ('images' | 'dots') | null;
               hasLimit?: boolean | null;
@@ -2351,28 +2354,65 @@ export interface Sidebars {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "getInTouch".
+ */
+export interface GetInTouch {
+  id: string;
+  candidateName?: string | null;
+  contactInfos?:
+    | {
+        isLink?: boolean | null;
+        type?:
+          | ('radix/envelope-closed' | 'radix/phone' | 'radix/globe' | 'radix/github-logo' | 'radix/linkedin-logo')
+          | null;
+        value?: string | null;
+        link?: {
+          type?: ('reference' | 'custom' | 'current') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          /**
+           * Dictates how the link should be rendered.
+           */
+          appearance?:
+            | (
+                | 'default'
+                | 'destructive'
+                | 'ghost'
+                | 'link'
+                | 'outline'
+                | 'text'
+                | 'secondary'
+                | 'underline'
+                | 'underlineSimple'
+                | 'iconOnly'
+                | 'menu'
+                | 'categoryLabel'
+                | 'richtextLink'
+                | 'sideDrawer'
+              )
+            | null;
+          /**
+           * Highlights the link based on the URL
+           */
+          isActive?: ('default' | 'exact' | 'never') | null;
+          isSheet?: boolean | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  links?:
-    | T
-    | {
-        linkType?: T;
-        link?: T;
-        triggerType?: T;
-        linkTrigger?: T;
-        textTrigger?: T;
-        contextSections?:
-          | T
-          | {
-              sectionType?: T;
-              sectionTitle?: T;
-              text?: T;
-              sectionLinks?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2448,32 +2488,12 @@ export interface SideDrawerSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
-                    formBlock?:
-                      | T
-                      | {
-                          form?: T;
-                          enableIntro?: T;
-                          introContent?: T;
-                          gutter?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
                     itemsList?:
                       | T
                       | {
                           blockTitle?: T;
                           populateBy?: T;
                           relationTo?: T;
-                          featured?:
-                            | T
-                            | {
-                                relationTo?: T;
-                              };
-                          specificList?:
-                            | T
-                            | {
-                                links?: T;
-                              };
                           cardVariant?: T;
                           layout?: T;
                           imageSelector?: T;
@@ -2507,24 +2527,6 @@ export interface SideDrawerSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "getInTouch_select".
- */
-export interface GetInTouchSelect<T extends boolean = true> {
-  email?: T;
-  phoneNumber?: T;
-  socials?:
-    | T
-    | {
-        plateform?: T;
-        link?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings_select".
  */
 export interface SettingsSelect<T extends boolean = true> {
@@ -2552,16 +2554,6 @@ export interface SidebarsSelect<T extends boolean = true> {
                     blockTitle?: T;
                     populateBy?: T;
                     relationTo?: T;
-                    featured?:
-                      | T
-                      | {
-                          relationTo?: T;
-                        };
-                    specificList?:
-                      | T
-                      | {
-                          links?: T;
-                        };
                     cardVariant?: T;
                     layout?: T;
                     imageSelector?: T;
@@ -2586,6 +2578,36 @@ export interface SidebarsSelect<T extends boolean = true> {
                     blockName?: T;
                   };
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "getInTouch_select".
+ */
+export interface GetInTouchSelect<T extends boolean = true> {
+  candidateName?: T;
+  contactInfos?:
+    | T
+    | {
+        isLink?: T;
+        type?: T;
+        value?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+              isActive?: T;
+              isSheet?: T;
+            };
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

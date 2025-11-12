@@ -1,6 +1,3 @@
-import { CallToActionBlock } from "@app/blocks/layouts/CallToAction"
-import { CodeBlock } from "@app/blocks/layouts/Code"
-import { MediaBlock } from "@app/blocks/layouts/MediaBlock"
 import React, { Fragment, JSX } from "react"
 import { CMSLink } from "src/app/components/Link"
 
@@ -39,7 +36,6 @@ export function serializeLexical({ nodes, textClassName }: Props): JSX.Element {
     } else {
       alignType = format
     }
-
     switch (alignType) {
       case "center":
         return "text-center"
@@ -150,33 +146,6 @@ export function serializeLexical({ nodes, textClassName }: Props): JSX.Element {
         }
 
         if (node.type === "block") {
-          const block = node.fields
-
-          const blockType = block?.blockType
-
-          if (!block || !blockType) {
-            return null
-          }
-
-          switch (blockType) {
-            case "cta":
-              return <CallToActionBlock key={index} {...block} />
-            case "mediaBlock":
-              return (
-                <MediaBlock
-                  className="col-start-1 col-span-3 "
-                  imgClassName="m-0 w-[100px] h-[100px]"
-                  key={index}
-                  {...block}
-                  captionClassName="mx-auto max-w-[48rem]"
-                  enableGutter={false}
-                />
-              )
-            case "code":
-              return <CodeBlock className="col-start-2" key={index} {...block} />
-            default:
-              return null
-          }
         } else {
           switch (node.type) {
             case "linebreak": {

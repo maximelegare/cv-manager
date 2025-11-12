@@ -6,13 +6,7 @@ import { cardComponentsMap } from "@app/_Map/cards.map"
 import { gutterField } from "@app/payload/fields/gutter"
 
 export type CardVariant = keyof typeof cardComponentsMap
-const cardVariants: Array<CardVariant> = [
-  "category",
-  "blog",
-  "blog-condensed",
-  "category-label",
-  "link",
-] as const
+const cardVariants: Array<CardVariant> = ["cv", "link", "letter"] as const
 
 export const ItemsListBlock: Block = {
   slug: "itemsList",
@@ -35,14 +29,6 @@ export const ItemsListBlock: Block = {
           label: "Whole Collection",
           value: "collection",
         },
-        {
-          label: "Featured",
-          value: "featured",
-        },
-        {
-          label: "Specific List",
-          value: "specificList",
-        },
       ],
     },
     {
@@ -55,114 +41,19 @@ export const ItemsListBlock: Block = {
       label: "Collection to Show",
       options: [
         {
-          label: "Categories",
-          value: "categories",
+          label: "CVs",
+          value: "cvs",
         },
         {
-          label: "Blogs",
-          value: "blogs",
-        },
-      ],
-    },
-    {
-      name: "featured",
-      type: "group",
-      admin: {
-        condition: (_, siblingData) => siblingData.populateBy === "featured",
-      },
-      fields: [
-        {
-          name: "relationTo",
-          type: "select",
-          defaultValue: "blogs",
-          label: "Collection to Show",
-          options: [
-            {
-              label: "Categories",
-              value: "categories",
-            },
-
-            {
-              label: "Blogs",
-              value: "blogs",
-            },
-          ],
-        },
-        // {
-        //   name: "categories",
-        //   type: "relationship",
-        //   admin: {
-        //     condition: (_, siblingData) => siblingData.relationTo === "categories",
-        //   },
-        //   hasMany: true,
-        //   label: "Categories to show",
-        //   relationTo: "categories",
-        // },
-      ],
-    },
-    {
-      name: "specificList",
-      type: "group",
-      admin: {
-        condition: (_, siblingData) => siblingData.populateBy === "specificList",
-      },
-      fields: [
-        // {
-        //   name: "relationTo",
-        //   type: "select",
-        //   defaultValue: "blogs",
-        //   label: "Collection to Show",
-        //   options: [
-        //     {
-        //       label: "Categories",
-        //       value: "categories",
-        //     },
-        //     {
-        //       label: "Blogs",
-        //       value: "blogs",
-        //     },
-        //     {
-        //       label: "Links",
-        //       value: "links",
-        //     },
-        //   ],
-        // },
-        // {
-        //   name: "categories",
-        //   type: "relationship",
-        //   admin: {
-        //     condition: (_, siblingData) => siblingData.relationTo === "categories",
-        //   },
-        //   hasMany: true,
-        //   label: "Categories to show",
-        //   relationTo: "categories",
-        // },
-        // {
-        //   name: "blogs",
-        //   type: "relationship",
-        //   admin: {
-        //     condition: (_, siblingData) => siblingData.relationTo === "blogs",
-        //   },
-        //   hasMany: true,
-        //   label: "blogs to show",
-        //   relationTo: "blogs",
-        // },
-        {
-          name: "links",
-          type: "relationship",
-          admin: {
-            condition: (_, siblingData) => siblingData.relationTo === "links",
-          },
-          hasMany: true,
-          label: "Links to show",
-          relationTo: "links",
+          label: "Letters",
+          value: "letters",
         },
       ],
     },
     {
       name: "cardVariant",
       type: "select",
-      defaultValue: "blog",
+      defaultValue: "cv",
       options: cardVariants.map((el) => ({ label: capitalize(el), value: el })),
     },
     {

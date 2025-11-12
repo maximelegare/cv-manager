@@ -16,6 +16,7 @@ import {
   LinkFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical"
+import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs"
 // import dotenv from 'dotenv'
 import path from "path"
 import { buildConfig } from "payload"
@@ -38,7 +39,8 @@ import { GetInTouch } from "@app/payload/globals/GetInTouch"
 import { revalidateGlobalsHandler } from "@app/endpoints/revalidate"
 import { Links } from "@app/payload/collections/Links"
 import { Sidebars } from "@app/payload/globals/Sidebars/config"
-import { CV } from "@app/payload/collections/cvs"
+import { CVS } from "@app/payload/collections/Cvs"
+import { Letters } from "@app/payload/collections/Letters"
 
 // import { EmbedFeature } from '@payload/lexical/features/embedFeature/feature.server'
 // import { FontColorFeature } from '@payload/lexical/features/fontColorFeature/feature.server'
@@ -124,7 +126,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI || "",
   }),
 
-  collections: [Pages, Media, Users, Links, CV],
+  collections: [Pages, Media, Users, Links, CVS, Letters],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   endpoints: [
@@ -134,7 +136,7 @@ export default buildConfig({
       path: "/revalidate-globals",
     },
   ],
-  globals: [Header, Footer, SideDrawer, GetInTouch, Settings, Sidebars],
+  globals: [Header, Footer, SideDrawer, Settings, Sidebars, GetInTouch],
   plugins: [
     uploadthingStorage({
       collections: {
@@ -166,6 +168,16 @@ export default buildConfig({
           afterChange: [revalidateRedirects],
         },
       },
+    }),
+    nestedDocsPlugin({
+      collections: ["cvs"],
+      generateLabel: (_, doc) => doc.title as string,
+      generateURL: (docs) => docs.reduce((url, doc) => `/cvs/${doc.slug}`, ""),
+    }),
+    nestedDocsPlugin({
+      collections: ["letters"],
+      generateLabel: (_, doc) => doc.title as string,
+      generateURL: (docs) => docs.reduce((url, doc) => `/letters/${doc.slug}`, ""),
     }),
     seoPlugin({
       collections: ["pages"],

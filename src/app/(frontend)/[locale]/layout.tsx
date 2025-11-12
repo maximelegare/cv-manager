@@ -9,13 +9,12 @@ import React from "react"
 
 // import { Footer } from '../../components/Footer'
 import { Header } from "../../components/Header"
-import { LivePreviewListener } from "../../components/LivePreviewListener"
+
 import { Providers } from "@app/providers"
 import { mergeOpenGraph } from "@app/utilities/mergeOpenGraph"
 import "./styles/globals.css"
 // import { ScrollArea } from '@app/components/ui/scroll-area'
-import { getGlobal } from "@app/utilities/getGlobals"
-import { Settings } from "@payload-types"
+
 import { getMeUser } from "@app/utilities/getMeUser"
 import { redirect } from "next/navigation"
 import { headers } from "next/headers"
@@ -29,7 +28,6 @@ import { AdminBar } from "@app/components/AdminBar"
 const inter = Inter({ subsets: ["latin"] })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings: Settings = await getGlobal("settings")
   const meUser = await getMeUser()
 
   const headersList = await headers()
@@ -37,10 +35,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = detectLocaleFromPathname(pathname)
 
   if (
-    settings.underConstruction &&
-    (!meUser.user || !meUser.user.roles.includes("admin") || !meUser.user.roles.includes("super"))
+    !meUser.user ||
+    !meUser.user.roles.includes("admin") ||
+    !meUser.user.roles.includes("super")
   ) {
-    if (!pathname.includes("under-construction")) redirect("/under-construction")
+    redirect("/admin")
   }
 
   return (
@@ -57,13 +56,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <Providers>
           <div className="prose">
-            <LivePreviewListener />
             <AdminBar />
-            <Header
-              locale={locale}
-              show={!pathname.includes("under-construction")}
-              showLocaleSwitcher={settings?.showLocaleSwitcher || false}
-            />
+            <Header locale={locale} show={!pathname.includes("under-construction")} />
             {children}
             <Prerenderer numberOfCards={4} />
           </div>

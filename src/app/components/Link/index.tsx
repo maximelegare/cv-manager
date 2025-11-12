@@ -10,11 +10,9 @@ export type Appearance = "inline" | ButtonProps["variant"]
 import { Icon, type IconName } from "../Icon"
 
 import { Link as LinkType } from "@payload-types"
-import { getUrlData, getSearchParams, getSearchParamsFromURL } from "@app/utilities/searchParams"
+import { getUrlData } from "@app/utilities/searchParams"
 import { buttonsComponentsMap } from "@app/_Map/buttons.map"
 import { SheetClose } from "../ui/sheet"
-
-export type SearchParams = LinkType["link"]["searchParams"]
 
 export type CMSLinkType = {
   icon?: {
@@ -34,7 +32,6 @@ export type CMSLinkType = {
   size?: ButtonProps["size"] | null
   type?: LinkType["link"]["type"] | null
   url?: string | null
-  searchParams?: SearchParams
   isActive?: LinkType["link"]["isActive"]
   isCurrentlySelected?: boolean
   currentUrl: string
@@ -53,7 +50,6 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     reference,
     size: sizeFromProps,
     url,
-    searchParams,
     isActive,
     currentUrl,
     isCurrentlySelected,
@@ -68,15 +64,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
         }`
       : url
 
-  const { url: urlWithParams, params: linkParams } = getSearchParams({
-    url: type === "current" ? currentUrl : url || href,
-    params: searchParams?.params,
-    options: { toggleOnClick: searchParams?.toggleOnClick },
-  })
+  const urlWithParams = type === "current" ? currentUrl : url || href
 
   if (!urlWithParams) return null
-
-  const currentUrlParams = getSearchParamsFromURL(currentUrl)
 
   const size = appearance === "link" ? "clear" : sizeFromProps
   const newTabProps = newTab ? { rel: "noopener noreferrer", target: "_blank" } : {}
@@ -85,29 +75,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     if (!currentUrl) return false
     else if (isActive === "never") return false
     else if (isActive === "default") {
-      /*
-        Highlights the active link based on the page, not the params
-      */
       const currUrlPathname = getUrlData(currentUrl).url.pathname
       if (href === currUrlPathname || url === currUrlPathname) return true
-
-      /*
-        Prevents the links that don't contain a show param from always getting highlighted
-      */
-      if (!linkParams?.show && !currentUrlParams?.get("show")) return false
-      else if (!linkParams?.show && currentUrlParams?.get("show")) return false
-      /*
-       Checks if all the params in the link are included in the current URL
-      */
-      return Object.entries(linkParams).every(([key, val]) => currentUrlParams.get(key) === val)
+      return false
     } else if (isActive === "exact" && currentUrl === urlWithParams) {
-      // return true
+      return true
     } else return false
   }
 
-  /*
-   Ensure we don't break any styles set by richText
-  */
   if (appearance === "inline") {
     return (
       <Link
@@ -132,10 +107,12 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     switch (justifyContent) {
       case "center":
         return "justify-center"
-      case "center":
+      case "right":
         return "justify-right"
-      case "center":
+      case "left":
         return "justify-left"
+      default:
+        return undefined
     }
   }
 
@@ -192,7 +169,7 @@ const LineUnderButton = ({
 }) => (
   <span
     className={cn(
-      `absolute  bottom-[-3px] left-0 h-[1px] bg-accent transition-all duration-300 ${baseWidth}`,
+      `absolute bottom-[-3px] left-0 h-[1px] bg-accent transition-all duration-300 ${baseWidth}`,
       isActive ? "w-full" : "group-hover:w-full",
       className,
     )}

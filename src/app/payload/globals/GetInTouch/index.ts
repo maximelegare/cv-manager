@@ -1,49 +1,72 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalConfig } from "payload"
 
-import { anyone } from '@app/access/anyone'
-import { authenticated } from '@app/access/authenticated'
+import { anyone } from "@app/access/anyone"
+import switchField from "@app/payload/fields/switch/config"
+import { link } from "@app/payload/fields/link"
+import { superUser } from "@app/access/super"
 
 export const GetInTouch: GlobalConfig = {
-  slug: 'getInTouch',
+  slug: "getInTouch",
   access: {
     read: anyone,
-    update: authenticated,
+    update: superUser,
   },
   fields: [
     {
-      name: 'email',
-      type: 'text',
+      name: "candidateName",
+      label: "Candidat Name",
+      type: "text",
     },
     {
-      name: 'phoneNumber',
-      type: 'text',
-    },
-    {
-      type: 'array',
-      name: 'socials',
+      name: "contactInfos",
+      type: "array",
       fields: [
+        switchField({
+          name: "isLink",
+          label: "Is Link",
+        }),
         {
-          name: 'plateform',
-          type: 'select',
+          name: "type",
+          type: "select",
           options: [
             {
-              label: 'Facebook',
-              value: 'facebook',
+              label: "Email",
+              value: "radix/envelope-closed",
             },
             {
-              label: 'Instagram',
-              value: 'instagram',
+              label: "Phone",
+              value: "radix/phone",
             },
             {
-              label: 'Pinterest',
-              value: 'pinterest',
+              label: "Website",
+              value: "radix/globe",
+            },
+            {
+              label: "GitHub",
+              value: "radix/github-logo",
+            },
+            {
+              label: "LinkedIn",
+              value: "radix/linkedin-logo",
             },
           ],
+          localized: true,
         },
         {
-          name: 'link',
-          type: 'text',
+          name: "value",
+          type: "text",
+          localized: true,
+          admin: {
+            condition: (_, { isLink }) => Boolean(!isLink),
+          },
         },
+        link({
+          overrides: {
+            admin: {
+              condition: (_, { isLink }) => Boolean(isLink),
+            },
+          },
+        }),
       ],
     },
   ],

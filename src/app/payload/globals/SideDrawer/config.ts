@@ -1,4 +1,3 @@
-import { FormBlock } from "../../../blocks/layouts/Form/config"
 import { ItemsListBlock } from "@app/blocks/layouts/ItemsListBlock/config"
 import { Content } from "../../../blocks/layouts/Content/config"
 import { TitleSectionBlock } from "@app/blocks/layouts/TitleSectionBlock/config"
@@ -27,7 +26,7 @@ export const SideDrawer: GlobalConfig = {
               name: "layout",
               type: "blocks",
               localized: true,
-              blocks: [Content, FormBlock, ItemsListBlock, TitleSectionBlock],
+              blocks: [Content, ItemsListBlock, TitleSectionBlock],
             },
           ],
         },

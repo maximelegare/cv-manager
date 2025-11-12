@@ -32,7 +32,7 @@ export const ContentBlock: React.FC<
   }
 
   return (
-    <div className="mb-12">
+    <div className="mb-8">
       {columns && columns.length > 0 && (
         <div className={containerClassName}>
           {columns.map((col, index) => {

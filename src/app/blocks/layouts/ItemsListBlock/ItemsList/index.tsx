@@ -15,11 +15,11 @@ import { cardComponentsMap } from "@app/_Map/cards.map"
 import { PrerendedCard } from "@app/components/Prerenderer/Card"
 import { Separator } from "@app/components/ui/separator"
 import { CardVariant } from "../config"
-import { Category, Media } from "@payload-types"
+import { Cv, Media } from "@payload-types"
 import { CMSLinkType } from "@app/components/Link"
 
 export type RelationTo = ItemsListBlockProps["relationTo"] | "media"
-export type Item = Category | Media
+export type Item = Cv | Media
 
 export type Props<T> = {
   items: T[]
@@ -64,9 +64,7 @@ export const ItemsList = <T extends Item>(props: Props<T>) => {
       case "verticalList":
         return (
           <React.Fragment key={idx}>
-            {idx === 0 && <Separator />}
             <Card {...props} />
-            <Separator />
           </React.Fragment>
         )
 
@@ -145,7 +143,26 @@ export const ItemsList = <T extends Item>(props: Props<T>) => {
         )
       }
       case "verticalList": {
-        return <div className="flex flex-col gap-4">{mapCards(cardVariant, "w-full")}</div>
+        return (
+          <ScrollArea orientation="vertical" thumb={{ className: "bg-accent", width: "thin" }}>
+            <div className="h-[200px]">
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+              {mapCards(cardVariant, "w-full")}
+            </div>
+          </ScrollArea>
+        )
+        // return <div className="flex flex-col gap-4">{mapCards(cardVariant, "w-full")}</div>
       }
       case "horizontalWrap": {
         return (

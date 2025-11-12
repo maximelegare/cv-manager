@@ -1,13 +1,13 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload"
 
-import { anyone } from '../../../access/anyone'
-import { admins } from '@app/access/admins'
-import { link } from '@app/payload/fields/link'
+import { anyone } from "../../../access/anyone"
+import { admins } from "@app/access/admins"
+import { link } from "@app/payload/fields/link"
 
 export const Links: CollectionConfig = {
-  slug: 'links',
+  slug: "links",
   admin: {
-    useAsTitle: 'title',
+    useAsTitle: "title",
   },
   access: {
     create: admins,
@@ -17,15 +17,16 @@ export const Links: CollectionConfig = {
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
     },
     link(),
     {
-      name: 'logo',
-      type: 'upload',
-      relationTo: 'media',
+      name: "logo",
+      type: "upload",
+      relationTo: "media",
     },
+    // searchParams(),
   ],
 }

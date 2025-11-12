@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { cn } from '@app/utilities/cn'
-import React, { forwardRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { cn } from "@app/utilities/cn"
+import React, { forwardRef } from "react"
+import { useRouter } from "next/navigation"
 
 type Props = {
   children: React.ReactNode
@@ -22,10 +22,10 @@ export const Card = forwardRef<HTMLElement, Props>(({ children, className, style
         ...style,
       }}
       className={cn(
-        'rounded-lg overflow-hidden bg-card text-card-foreground hover:cursor-pointer group w-full',
+        "rounded-lg overflow-hidden bg-gray-100 text-card-foreground hover:cursor-pointer group w-full",
         className,
         // Use Tailwind's responsive utilities for default behavior
-        'w-full sm:w-auto',
+        "w-full sm:w-auto",
       )}
     >
       {children}
@@ -33,4 +33,4 @@ export const Card = forwardRef<HTMLElement, Props>(({ children, className, style
   )
 })
 
-Card.displayName = 'Card'
+Card.displayName = "Card"

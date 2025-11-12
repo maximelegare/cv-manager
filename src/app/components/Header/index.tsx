@@ -4,23 +4,16 @@ import { Logo } from "@app/components/Logo/Official"
 import type { Header } from "@payload-types"
 import { Locale } from "ROOT/locales/locales"
 import Link from "next/link"
-import { NavigationMenu } from "@app/components/HeaderNavigationMenu"
 import { Separator } from "../ui/separator"
-import { getCachedGlobal } from "@app/utilities/getGlobals"
-// import { LocaleSelector } from "@app/providers/Locale/LocaleSelector"
-import { SideDrawer } from "@app/components/SideDrawer"
+
 import { LocaleSelector } from "@app/providers/Locale/LocaleSelector"
 
 type HeaderProps = {
   locale: Locale
   show: boolean
-  showLocaleSwitcher: boolean
 }
 
-export async function Header({ locale, show, showLocaleSwitcher }: HeaderProps) {
-  // @ts-ignore
-  const header: Header = await getCachedGlobal("header", 2, locale)()
-
+export async function Header({ show }: HeaderProps) {
   if (!show) return null
 
   return (
@@ -32,18 +25,12 @@ export async function Header({ locale, show, showLocaleSwitcher }: HeaderProps) 
               <Link href="/" className="z-50">
                 <Logo />
               </Link>
-              <div className="hidden md:block">
-                <NavigationMenu locale={locale} header={header} />
-              </div>
             </div>
-            {showLocaleSwitcher && (
+            {
               <div className="relative z-30 hidden md:block">
                 <LocaleSelector triggerClassName="justify-center" />
               </div>
-            )}
-            <div className="relative z-30 block md:hidden">
-              <SideDrawer locale={locale} />
-            </div>
+            }
           </div>
         </div>
         <Separator />

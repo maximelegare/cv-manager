@@ -1,4 +1,3 @@
-import { CodeBlockProps } from "@app/blocks/layouts/Code"
 import { Page } from "@payload-types"
 import { DefaultNodeTypes, SerializedBlockNode } from "@payloadcms/richtext-lexical"
 
@@ -7,7 +6,6 @@ export type NodeTypes =
   | SerializedBlockNode<
       | Extract<Page["layout"][0], { blockType: "cta" }>
       | Extract<Page["layout"][0], { blockType: "mediaBlock" }>
-      | CodeBlockProps
     >
   | {
       type: "table"

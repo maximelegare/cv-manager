@@ -1,17 +1,42 @@
 {
-  "$schema": "https://sly-cli.fly.dev/registry/config.json",
-  "libraries": [
-    {
-      "name": "@radix-ui/icons",
+  "$schema": "https://sly-cli.fly.dev/registry/config.v2.json",
+  "config": {
+    "icons": {
       "directory": "./svg/radix",
       "postinstall": [],
       "transformers": []
     },
-    {
-      "name": "phosphor-icons",
-      "directory": "./svg/phosphor",
-      "postinstall": [],
-      "transformers": []
+    "components": {},
+    "utils": {}
+  },
+  "libraries": {
+    "iconify:radix-icons": {
+      "name": "Radix Icons",
+      "config": "icons"
+    },
+    "iconify:phosphor": {
+      "name": "Phosphor Icons",
+      "config": {
+        "directory": "./svg/phosphor",
+        "postinstall": [],
+        "transformers": []
+      }
+    },
+    "iconify:fa6-brands": {
+      "name": "Font Awesome 6 Brands",
+      "config": "icons"
+    },
+    "iconify:fa6-solid": {
+      "name": "Font Awesome 6 Solid",
+      "config": "icons"
+    },
+    "iconify:fa7-solid": {
+      "name": "Font Awesome Solid",
+      "config": "icons"
+    },
+    "iconify:ph": {
+      "name": "Phosphor",
+      "config": "icons"
     }
-  ]
+  }
 }

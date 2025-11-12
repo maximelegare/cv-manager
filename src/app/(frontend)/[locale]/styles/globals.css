@@ -36,6 +36,10 @@
  
 
 
+  p{
+    font-size: 0.7rem !important;
+  }
+
 
   @screen md {
     h2,
@@ -82,11 +86,11 @@
 
 .prose :where(h4 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1.2rem;
-  margin-bottom: 0;
+  margin-bottom: 0.4rem;
 }
 
 .prose :where(h5 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  margin-top: 1rem;
+  line-height: 1.4;
   margin-bottom: 0;
 }
 
@@ -99,16 +103,18 @@
 .prose :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)){
   margin-top: 0;
   margin-bottom: 1; 
+  line-height: 1.4;
 }
 
 .prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)){
   margin-top: 0;
-  margin-bottom: 0; 
+  margin-bottom: 0;
+  margin-left: 0.25rem; /* Adjust this value to change the left margin */
 }
 
 .prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)){
   margin-top: 0;
-  margin-bottom: 1rem; 
+  margin-bottom: 0.4rem; 
 }
 
 @layer base {

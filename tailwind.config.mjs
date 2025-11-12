@@ -168,12 +168,10 @@ export default {
               // fontSize: '1.3rem',
               fontWeight: '800',
               letterSpacing: "0.14em",
-  
             },
             h5: {
               // fontSize: '0.9rem',
               fontWeight: '700',
-              letterSpacing: "0.15em",
          
             },
             h6: {
@@ -199,12 +197,13 @@ export default {
               opacity: '0.85',
             },
             li: {
-              fontSize: '1rem',
+              fontSize: '0.65rem',
               fontWeight: '300',
               opacity: '0.85',
             },
             ul:{
-              marginTop:'0'
+              marginTop:'0',
+              paddingLeft:" 1rem" // Adjust this value to change the left margin
             }
           },
         },

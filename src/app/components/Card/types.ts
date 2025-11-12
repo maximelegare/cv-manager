@@ -1,5 +1,5 @@
 import { RelationTo } from "../../blocks/layouts/ItemsListBlock/ItemsList"
-import { Blog, Category, Media } from "@payload-types"
+import { Cv, Letter } from "@payload-types"
 import { CSSProperties } from "react"
 
 export type BaseCard = {
@@ -12,19 +12,10 @@ export type BaseCard = {
   // It uses the width of a card in a grid
 }
 
-export type BlogCardProps = BaseCard & {
-  doc?: Blog
+export type CvCardProps = BaseCard & {
+  doc?: Cv
 }
 
-export type CategoryCardProps = BaseCard & {
-  doc?: Category
-}
-
-export type CategoryLabelprops = {
-  doc?: Category & { size?: "sm" | "lg" }
-  className?: string
-}
-
-export type MediaCardProps = BaseCard & {
-  doc?: Media
+export type LetterCardProps = BaseCard & {
+  doc?: Letter
 }
