@@ -54,7 +54,7 @@ export const CuriculumVitae: React.FC<CuriculumVitaeProps> = async ({ data, getI
             </div>
 
             {/* LEFT COLUMN */}
-            <aside className="">
+            <div className="">
               {/* COMPETENCES */}
               {pages?.map((page) => (
                 <div key={page.id}>
@@ -69,16 +69,13 @@ export const CuriculumVitae: React.FC<CuriculumVitaeProps> = async ({ data, getI
                     </ul>
                   </div>
                   <div className="ml-8">
-                    <ul className="!pl-0 pt-4 !list-none flex flex-wrap gap-x-2">
+                    <div className="pt-4 flex flex-wrap gap-x-2 gap-y-1">
                       {page.competences?.hardSkills?.map((skill) => (
-                        <li
-                          className="!list-none leading-none py-1 px-2 bg-gray-100 rounded-[10px]"
-                          key={skill.id}
-                        >
+                        <h5 className="" key={skill.id}>
                           {skill.title}
-                        </li>
+                        </h5>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                   <div className="ml-8">
                     <h4 className="border-b border-gray-200">{page.education.tabName}</h4>
@@ -117,7 +114,7 @@ export const CuriculumVitae: React.FC<CuriculumVitaeProps> = async ({ data, getI
                   </div>
                 </div>
               ))}
-            </aside>
+            </div>
           </div>
 
           <div className="col-span-3 space-y-8 mx-8">

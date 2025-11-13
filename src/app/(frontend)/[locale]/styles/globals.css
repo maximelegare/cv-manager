@@ -1,124 +1,142 @@
-@import './theme.css';
+@import "./theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  h1
-   {
+  h1 {
     font-size: clamp(1.6em, 1.6vw + 2rem, 5em) !important;
   }
 
   h2,
-  h2>span {
+  h2 > span {
     font-size: 2rem !important;
   }
   h3,
-  h3>span {
+  h3 > span {
     font-size: 1.5rem !important;
   }
   h4,
-  h4>span {
+  h4 > span {
     font-size: 1rem !important;
+    font-weight: bold;
+    letter-spacing: "0.14em";
+    margin-top: 1.2rem;
+    margin-bottom: 0.4rem;
   }
   h5,
-  h5>span,
+  h5 > span,
   label {
     font-size: 0.8rem !important;
+    font-weight: bold !important;
   }
- 
+
   h6,
-  h6>span,
+  h6 > span,
   label {
-    font-size: 0.75rem !important;
-    opacity: 90%;
+    font-size: 0.65rem !important;
+    font-weight: '400';
+    opacity: "90%";
   }
- 
 
-
-  p{
+  p {
     font-size: 0.7rem !important;
   }
 
-
   @screen md {
     h2,
-    h2>span {
+    h2 > span {
       font-size: 2.3rem !important;
-
     }
     h3,
-  h3>span {
-    font-size: 1.8rem !important;
-
+    h3 > span {
+      font-size: 1.8rem !important;
+    }
+    h4,
+    h4 > span {
+      font-size: 1.2rem !important;
+      font-weight: bold;
+      letter-spacing: "0.14em";
+      margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
+    }
+    h5,
+    h5 > span {
+      font-size: 0.85rem !important;
+      font-weight: bold !important;
+    }
+    h6,
+    h6 > span,
+    label {
+      font-size: 0.65rem !important;
+      font-weight: '400';
+      opacity: "90%";
+    }
   }
-  h4,
-  h4>span {
-    font-size: 1.2rem !important;
-
-  }
-  h5,
-  h5>span {
-    font-size: 0.85rem !important;
-  }
-    }  
-
 }
 
-.prose :where(h2 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
- 
+
 .prose {
   max-width: none !important;
 }
 
-.prose :where(h2 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
 
-.prose :where(h3 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 2rem;
   margin-bottom: 0;
 }
 
-.prose :where(h4 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose :where(h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 1.2rem;
   margin-bottom: 0.4rem;
+  font-weight: bold;
+  letter-spacing: "0.14em";
 }
 
-.prose :where(h5 ):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+.prose :where(h5):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   line-height: 1.4;
   margin-bottom: 0;
+  font-weight: bold !important;
 }
 
+
+.prose :where(h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 0.65rem !important;
+  font-weight: '400';
+  opacity: "90%";
+}
 /* Removes default margins for images */
 .prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0rem;
   margin-bottom: 0rem;
 }
 
-.prose :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)){
+.prose :where(li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0;
-  margin-bottom: 1; 
+  margin-bottom: 1;
   line-height: 1.4;
 }
 
-.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)){
+.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0.25rem; /* Adjust this value to change the left margin */
 }
 
-.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)){
+.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0;
-  margin-bottom: 0.4rem; 
+  margin-bottom: 0.4rem;
 }
 
 @layer base {
-
   h2,
   h3,
   h4,
@@ -126,7 +144,6 @@
   h6 {
     font-weight: auto;
   }
-
 
   /* 
   :root {
@@ -219,7 +236,7 @@ body {
   /* overflow: hidden; */
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
+html[data-theme="dark"],
+html[data-theme="light"] {
   opacity: initial;
 }

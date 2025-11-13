@@ -178,7 +178,6 @@ export default {
               // fontSize: '0.9rem',
               fontWeight: '400',
               opacity: "90%",
-              letterSpacing: "0.15em"
               
             },
             label: {

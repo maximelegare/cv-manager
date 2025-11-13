@@ -21,8 +21,8 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
         <style>
         ${css}
          @page {
-              size: A4;
-              margin: 4mm;
+              size: letter;
+              margin: 0;
             }
             * {
               -webkit-print-color-adjust: exact !important;
@@ -31,7 +31,7 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
             html, body {
               margin: 0 !important;
               padding: 0 !important;
-              background: white !important;
+              background: red !important;
               color: black !important;
               width: 100% !important;
               height: auto !important;
@@ -86,7 +86,7 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
 
     // Generate PDF
     const pdfBuffer = await page.pdf({
-      format: "A4",
+      format: "letter",
       printBackground: true,
       preferCSSPageSize: false,
       margin: { top: 0, bottom: 0, left: 0, right: 0 },
