@@ -14,56 +14,83 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
     const css = await getCompiledCSS("en")
 
     const htmlWithStyles = `
+    <!DOCTYPE html>
     <html>
       <head>
+        <meta charset="UTF-8">
         <style>
         ${css}
          @page {
               size: A4;
-              margin: 10mm;
+              margin: 4mm;
             }
-            body {
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
+            * {
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+              color: black !important;
+              width: 100% !important;
+              height: auto !important;
+            }
+            /* Force visibility of all elements */
+            * {
+              visibility: visible !important;
+              opacity: 1 !important;
+            }
+            /* Ensure main element is visible */
+            main {
+              display: block !important;
+              visibility: visible !important;
+              opacity: 1 !important;
+              position: relative !important;
             }
             .pdf-page {
               page-break-after: always;
             }
         </style>
       </head>
-      <body>${html}</body>
+      <body>${html || "<p>No content provided</p>"}</body>
     </html>
   `
 
     chromium.setGraphicsMode = false
 
-    const viewport = {
-      deviceScaleFactor: 1,
-      hasTouch: false,
-      height: 1080,
-      isLandscape: true,
-      isMobile: false,
-      width: 1920,
-    }
-
     const browser = await puppeteer.launch({
-      args: puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
-      defaultViewport: viewport,
+      args: [...chromium.args, "--no-sandbox", "--disable-setuid-sandbox"],
       executablePath: await chromium.executablePath(),
-      headless: "shell",
+      headless: true,
     })
 
     const page = await browser.newPage()
-    await page.setContent(htmlWithStyles, { waitUntil: "networkidle0" })
 
+    // Set a viewport that matches the content size (850px width for A4-like content)
+    await page.setViewport({
+      width: 1200,
+      height: 1600,
+      deviceScaleFactor: 1,
+    })
+
+    // Set content and wait for it to fully render
+    await page.setContent(htmlWithStyles, {
+      waitUntil: "networkidle0",
+      timeout: 30000,
+    })
+
+    // Wait for fonts and ensure all styles are applied
+    await page.evaluateHandle(() => document.fonts.ready)
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Generate PDF
     const pdfBuffer = await page.pdf({
       format: "A4",
       printBackground: true,
-      margin: { top: "10mm", bottom: "10mm" },
+      preferCSSPageSize: false,
+      margin: { top: 0, bottom: 0, left: 0, right: 0 },
     })
-
-    const content = await page.content()
-    console.log("content", content.slice(0, 10000))
 
     await browser.close()
 
