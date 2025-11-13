@@ -19,7 +19,6 @@ const RichText: React.FC<Props> = ({
   enableProse = true,
 }) => {
   if (!content) return null
-  console.log(content)
 
   return (
     <div

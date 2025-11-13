@@ -13,7 +13,6 @@ import { RightSidebar } from "@app/components/Sidebar"
 import { cn } from "@app/utilities/cn"
 import { draftMode, headers } from "next/headers"
 import { Page as PageType } from "@payload-types"
-// import { Footer } from "@app/components/Footer"
 import { getMeUser } from "@app/utilities/getMeUser"
 
 export const dynamic = "force-dynamic"

@@ -41,6 +41,7 @@ import { Links } from "@app/payload/collections/Links"
 import { Sidebars } from "@app/payload/globals/Sidebars/config"
 import { CVS } from "@app/payload/collections/Cvs"
 import { Letters } from "@app/payload/collections/Letters"
+import { generatePDFHandler } from "@app/endpoints/generatePDF"
 
 // import { EmbedFeature } from '@payload/lexical/features/embedFeature/feature.server'
 // import { FontColorFeature } from '@payload/lexical/features/fontColorFeature/feature.server'
@@ -134,6 +135,11 @@ export default buildConfig({
       handler: revalidateGlobalsHandler,
       method: "get",
       path: "/revalidate-globals",
+    },
+    {
+      handler: generatePDFHandler,
+      method: "post",
+      path: "/generate-pdf",
     },
   ],
   globals: [Header, Footer, SideDrawer, Settings, Sidebars, GetInTouch],

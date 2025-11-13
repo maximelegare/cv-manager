@@ -13,16 +13,18 @@ type CuriculumVitaeProps = {
 export const CuriculumVitae: React.FC<CuriculumVitaeProps> = async ({ data, getInTouch }) => {
   const {
     infos,
+    id,
     skills: { pages },
   } = data
 
   const { contactInfos, candidateName } = getInTouch
 
-  console.log(contactInfos)
-
   return (
     <div className="flex justify-center py-6">
-      <main className="bg-white w-full max-w-[850px] aspect-[8.5/11] shadow-lg rounded-xl font-sans overflow-y-auto print:shadow-none print:rounded-none print:p-0">
+      <main
+        id={`element-to-generate-pdf-${id}`}
+        className="bg-white w-full max-w-[850px] aspect-[8.5/11] shadow-lg rounded-xl font-sans overflow-y-auto print:shadow-none print:rounded-none print:p-0"
+      >
         {/* HEADER */}
         <header className="bg-blue-950 pb-3 pt-6 px-8">
           <div className="">

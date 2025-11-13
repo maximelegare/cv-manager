@@ -10,12 +10,15 @@ type LetterProps = {
 }
 
 export const Letter: React.FC<LetterProps> = async ({ data, getInTouch }) => {
-  const { company, letter } = data
+  const { id, company, letter } = data
   const { contactInfos, candidateName } = getInTouch
 
   return (
     <div className="flex justify-center py-6">
-      <main className="relative bg-white w-full max-w-[850px] aspect-[8.5/11] shadow-lg rounded-xl font-sans overflow-y-auto print:shadow-none print:rounded-none print:p-0">
+      <main
+        id={`element-to-generate-pdf-${id}`}
+        className="relative bg-white w-full max-w-[850px] aspect-[8.5/11] shadow-lg rounded-xl font-sans overflow-y-auto print:shadow-none print:rounded-none print:p-0"
+      >
         <div className="bg-blue-950 h-6"></div>
         <header className="mx-10 pt-4 pb-6">
           <DisplayDate
