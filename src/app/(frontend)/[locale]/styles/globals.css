@@ -58,13 +58,13 @@
       font-weight: bold;
       letter-spacing: "0.14em";
       margin-top: 1.2rem;
-  margin-bottom: 0.4rem;
+      margin-bottom: 0.4rem;
     }
-    h5,
+    /* h5,
     h5 > span {
       font-size: 0.85rem !important;
       font-weight: bold !important;
-    }
+    } */
     h6,
     h6 > span,
     label {

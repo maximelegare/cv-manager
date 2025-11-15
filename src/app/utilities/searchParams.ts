@@ -14,6 +14,7 @@ type GetUrlData = {
   url: URL
   locale: Locale
   pathnameWithoutLocale: string
+  fullpathWithoutLocale: string
 }
 
 export const getUrlData = (fullPath: string): GetUrlData => {
@@ -36,10 +37,13 @@ export const getUrlData = (fullPath: string): GetUrlData => {
       return url.join("/")
     }
 
+    const pathnameWithoutLocale = `/${filterLocales()}`
+
     return {
       url: urlData,
       locale: urlData.pathname.split("/")[1] as Locale,
-      pathnameWithoutLocale: `/${filterLocales()}`,
+      pathnameWithoutLocale,
+      fullpathWithoutLocale: `${pathnameWithoutLocale}${urlData.search}`,
     }
   } catch (err) {
     console.log(err, "wrong url format")

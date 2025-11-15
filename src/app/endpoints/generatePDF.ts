@@ -31,7 +31,7 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
             html, body {
               margin: 0 !important;
               padding: 0 !important;
-              background: red !important;
+              background: white !important;
               color: black !important;
               width: 100% !important;
               height: auto !important;
@@ -48,6 +48,11 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
               opacity: 1 !important;
               position: relative !important;
             }
+            /* Ensure prose styles from compiled CSS are applied - no overrides, just ensure they work */
+            /* The styles come from:
+             * 1. Tailwind typography plugin (tailwind.config.mjs) - fontSize, fontWeight, opacity
+             * 2. globals.css - margin-top, margin-bottom, line-height, margin-left
+             */
             .pdf-page {
               page-break-after: always;
             }
@@ -68,8 +73,9 @@ export const generatePDFHandler: PayloadHandler = async (req): Promise<Response>
     const page = await browser.newPage()
 
     // Set a viewport that matches the content size (850px width for A4-like content)
+    // Use a smaller viewport to avoid md breakpoint styles (md is 768px in Tailwind)
     await page.setViewport({
-      width: 1200,
+      width: 767, // Just below md breakpoint
       height: 1600,
       deviceScaleFactor: 1,
     })

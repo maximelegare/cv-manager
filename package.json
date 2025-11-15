@@ -21,6 +21,7 @@
     "semantic-release": "semantic-release --branches MAIN",
     "lint-staged": "lint-staged",
     "generate:icons": "npx tsx ./build-icons.mts",
+    "add:icons": "npx @sly-cli/sly add",
     "db:update": "pnpm ./db/updateDevDatabase.sh",
     "db:backupLocalDBLocally": "pnpm ./db/copydb.sh"
   },
